@@ -13,12 +13,12 @@ export default function Home() {
         <div className='container'>
 
         < Intro />
+        <Whoami />
 
         </div>
         </div>
         {/*
         <Contactme />
-        <Whoami />
         <Works /> */}
       </div>
   )
