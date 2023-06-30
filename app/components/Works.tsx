@@ -13,9 +13,12 @@ export const Works = () => {
     <div className='flex items-center snap-center h-[100vh]'>
       <div className='flex justify-between items-center h-full w-full'>
         <div className='w-full flex justify-center'>
-        <ul >
+        <ul className='flex flex-col'>
             {Object.entries(projects).map(([key, value]) => (
-              <li className='my-3 text-white p-1 w-full cursor-pointer  font-semibold text-2xl hover:worksElements' key={key}>{key}</li>
+              <div>
+
+                <li className='my-2 inline-block text-white p-1  cursor-pointer  font-semibold text-2xl worksElements' key={key}>{key}</li>
+              </div>
             ))}
           </ul>
         </div>
