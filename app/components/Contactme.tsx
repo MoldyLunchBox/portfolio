@@ -1,4 +1,8 @@
+'use client';
+import {Map} from "./Map"
 
+// @ts-nocheck
+// use client
 export const Contactme = () => {
   return (
     <div className='flex items-center justify-between snap-center h-[100vh]'>
@@ -12,8 +16,9 @@ export const Contactme = () => {
       </form>
 </div>
       <div className=" text-white basis-1/2">
-        map
+        <Map />
       </div>
     </div>
   )
 }
+
