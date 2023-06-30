@@ -17,3 +17,12 @@
       }
     }
   }
+.ok{
+  animation: updown 2s infinite ease alternate
+}
+
+  @keyframes updown {
+    100% {
+      transform: translateY(20px);
+    }
+  }

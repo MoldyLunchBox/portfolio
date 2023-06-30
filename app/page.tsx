@@ -8,8 +8,6 @@ import { Navbar } from './components/Navbar'
 
 export default function Home() {
   return (
-
-    <main className=''>
       <div className=' bg-gradient-to-r   from-black from-10% via- to-violet-900 overflow-y-auto scroll-smooth snap-y snap-mandatory h-[100vh]'>
         <div className='flex justify-center '>
         <div className='container'>
@@ -23,6 +21,5 @@ export default function Home() {
         <Whoami />
         <Works /> */}
       </div>
-    </main>
   )
 }

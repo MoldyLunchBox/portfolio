@@ -15,10 +15,11 @@ export const Intro = () => {
         <button className='bg-[#E3C515]  shadow shadow-white w-1/3 rounded p-2'>Learn more</button>
       </div>
         <div className='w-full flex  basis-2/3 justify-center '>
-        {/* <Image src="/pro.png" alt="My Image" width={500} height={300} /> */}
-        as
+        <Image  className="w-1/2 ok    min-w-[300px]"  src="/pro.png" alt="My Image" width={500} height={300} 
+     />
             </div>
       </div>
     </div>
   )
+
 }
