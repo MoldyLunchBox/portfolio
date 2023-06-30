@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className=' bg-gradient-to-r   from-black from-10% via- to-violet-900 overflow-y-auto scroll-smooth snap-y snap-mandatory h-[100vh]'>
       <div className='flex justify-center '>
-        <div className='container'>
+        <div className='container max-w-screen-lg mx-auto px-5'>
 
           < Intro />
           <Whoami />
