@@ -14,12 +14,13 @@ export default function Home() {
 
         < Intro />
         <Whoami />
+        <Works /> 
 
         </div>
         </div>
         {/*
-        <Contactme />
-        <Works /> */}
+        <Contactme />*/
+        }
       </div>
   )
 }
