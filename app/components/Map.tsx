@@ -16,15 +16,16 @@ export const Map = () => {
         <ComposableMap
           projection="geoAzimuthalEqualArea"
           projectionConfig={{
-            rotate: [-10.0, -52.0, 0],
-            center: [-5, -3],
-            scale: 1100
+            rotate: [-10.0, -15.0, 0],
+            center: [-10, 20],
+            scale: 1000
           }}
+          style={{ width:"100%", height: "100%"}}
         >
           <Geographies
             geography="/features.json"
-            fill="#D6D6DA"
-            stroke="#FFFFFF"
+            fill="black"
+            stroke="black"
             strokeWidth={0.5}
           >
             {({ geographies }) =>
@@ -34,7 +35,7 @@ export const Map = () => {
             }
           </Geographies>
           <Annotation
-            subject={[2.3522, 48.8566]}
+            subject={[-7.6167, 33.5900]}
             dx={-90}
             dy={-30}
             connectorProps={{
@@ -44,7 +45,7 @@ export const Map = () => {
             }}
           >
             <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
-              {"Paris"}
+              {"Casablanca"}
             </text>
           </Annotation>
         </ComposableMap>

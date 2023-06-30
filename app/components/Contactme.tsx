@@ -15,8 +15,11 @@ export const Contactme = () => {
         <button className="bg-[yellow]"> Send</button>
       </form>
 </div>
-      <div className=" text-white basis-1/2">
+      <div className=" h-full text-white basis-1/2">
+        <div className="h-full w-full">
+
         <Map />
+        </div>
       </div>
     </div>
   )
