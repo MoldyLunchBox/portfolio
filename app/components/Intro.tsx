@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navbar } from './Navbar'
+import Image from 'next/image';
 
 export const Intro = () => {
   return (
@@ -13,7 +14,10 @@ export const Intro = () => {
         <h5 className='text-sm text-gray-300'>full stuff stuff i do this and that </h5>
         <button className='bg-[#E3C515]  shadow shadow-white w-1/3 rounded p-2'>Learn more</button>
       </div>
-        <div className='w-full flex  basis-2/3 justify-center '>3d model</div>
+        <div className='w-full flex  basis-2/3 justify-center '>
+        {/* <Image src="/pro.png" alt="My Image" width={500} height={300} /> */}
+        as
+            </div>
       </div>
     </div>
   )
