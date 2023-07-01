@@ -8,20 +8,21 @@ import { Navbar } from './components/Navbar'
 
 export default function Home() {
   return (
-    <div className=' bg-gradient-to-r   from-black from-10% via- to-violet-900 overflow-y-auto scroll-smooth snap-y snap-mandatory h-[100vh]'>
-      <div className='flex flex-col justify-center '>
-        <div className=' max-w-screen-lg mx-auto px-5'>
+    <div className=' bg-gradient-to-r   from-black from-10%  to-violet-900 overflow-y-auto scroll-smooth snap-y snap-mandatory h-[100vh] flex flex-col items-center' >
+ 
+        <div className='container'>
 
           < Intro />
           <Whoami />
           <Works />
         </div>
         <div className="ml-auto pl-5">
-
           <Contactme />
+
         </div>
 
-      </div>
-    </div>
+</div>
+
+    
   )
 }
