@@ -6,7 +6,7 @@ import {Canvas} from '@react-three/fiber'
 import {OrbitControls} from '@react-three/drei'
 import { PerspectiveCamera } from 'three';
 
-import {Mesh, Shape,DoubleSide , ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry } from 'three';
+import {Mesh, Shape,DoubleSide , ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry , WebGLRenderer } from 'three';
 
 export const Whoami = () => {
   const [heart , setHeart] = useState({shape:new ShapeGeometry(), material: new MeshBasicMaterial()})
@@ -29,14 +29,24 @@ heartShape.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
 const geometry = new ShapeGeometry( heartShape );
 const material = new MeshBasicMaterial( { color: 0x00ff00,side: DoubleSide  } );
 // Center the mesh
+const scene = new Scene();
 geometry.center();
 const mesh = new Mesh( geometry, material ) ;
-const camera = new PerspectiveCamera(100, 5, 0.1, 1000);
 mesh.scale.set(0.5, 0.5, 0.5); // Adjust the scale to make it smaller
 
-const scene = new Scene();
+
+    // Adjust camera position and field of view
+    const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 10;
+    
+    scene.add(mesh);
+    scene.add(camera);
+
+
+
+
+
 scene.add( mesh );
-scene.add(camera);
 setHeart({shape: geometry, material: material})
 })
   return (
@@ -46,8 +56,11 @@ setHeart({shape: geometry, material: material})
      <Canvas>
         <OrbitControls autoRotate />
       <mesh scale={[0.4, -0.4, 0.4]} >
+        <ambientLight intensity={1} />
+        <directionalLight position={[3,2,1]} />
         {/* <shapeGeometry args={[heart]}/> */}
         <mesh args={[heart.shape, heart.material]}/>
+        <meshStandardMaterial  color={"red"}/>
         {/* <shapeGeometry args={[new Shape()]} /> */}
       </mesh>
      </Canvas>
