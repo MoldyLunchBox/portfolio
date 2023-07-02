@@ -15,7 +15,9 @@
     "@types/node": "20.3.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
+    "gsap": "^3.12.2",
     "next": "13.4.7",
+    "next-transpile-modules": "^10.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-simple-maps": "^1.0.0",
@@ -23,6 +25,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@types/gsap": "^3.0.0",
     "@types/react-simple-maps": "^3.0.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
