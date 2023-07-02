@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 
-import { Mesh, Shape, DoubleSide, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
+            <meshBasicMaterial side={BackSide} color="green"/>
+import { Mesh, Shape, BackSide, DoubleSide, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 
 export const Heart = () => {
     const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
@@ -20,6 +21,10 @@ export const Heart = () => {
         if (orbitControlsRef.current)
             console.log(orbitControlsRef.current)
     }, [orbitControlsRef.current])
+
+
+    const ballRef = useRef(null)
+    useEffect(())
     return (
         <>
             {/* <mesh scale={[0.4, -0.4, 0.4]} >
@@ -34,19 +39,30 @@ export const Heart = () => {
 
             <PerspectiveCamera  makeDefault position={[0, 3, 15]} />
             <OrbitControls autoRotate ref={orbitControlsRef} maxPolarAngle={ angleToradians(80)} minPolarAngle={angleToradians(60)} />
-            <mesh position={[0, 1, 0]} castShadow >
+            <mesh ref={ballRef} position={[0, 1, 0]} castShadow >
                 <sphereGeometry args={[1, 32, 32]} />
-                <meshStandardMaterial color="yellow" />
+                <meshStandardMaterial metalness={0.2} roughness={0.3}  color="yellow" />
             </mesh>
             <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
                 <planeGeometry args={[7, 7]} />
-                <meshStandardMaterial color="white" />
+            <meshBasicMaterial side={BackSide} color="green"/>
+                <meshStandardMaterial metalness={1} roughness={0.5}  color="white" />
 
             </mesh>
-            <ambientLight intensity={0.01} />
+            <ambientLight intensity={0.03} />
             {/* directinal light */}
             {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
             <spotLight  penumbra={0.3} args={["white", 2, 20, 0.3]} castShadow position={[-5,5,0]}/>
+        {/* environement */}
+        {/* <Environment background>
+            <mesh>
+
+            <sphereGeometry args={[50,100,100]}/>
+            <meshBasicMaterial side={BackSide} color="green"/>
+            </mesh>
+        </Environment> */}
+        
+        
         </>
     )
 }
