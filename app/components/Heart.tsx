@@ -33,7 +33,7 @@ export const Heart = () => {
 
 
             <PerspectiveCamera  makeDefault position={[0, 3, 15]} />
-            <OrbitControls  ref={orbitControlsRef} maxPolarAngle={ angleToradians(80)} minPolarAngle={angleToradians(60)} />
+            <OrbitControls autoRotate ref={orbitControlsRef} maxPolarAngle={ angleToradians(80)} minPolarAngle={angleToradians(60)} />
             <mesh position={[0, 1, 0]} castShadow >
                 <sphereGeometry args={[1, 32, 32]} />
                 <meshStandardMaterial color="yellow" />
