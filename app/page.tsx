@@ -5,6 +5,7 @@ import { Whoami } from './components/Whoami'
 import { Works } from './components/Works'
 import { Intro } from './components/Intro'
 import { Navbar } from './components/Navbar'
+import { Apportonity } from './components/Apportonity'
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
           < Intro />
           <Whoami />
           <Works />
+          <Apportonity />
         </div>
         <div className="ml-auto pl-5">
           <Contactme />

@@ -37,7 +37,7 @@
     transform: translateX(-50%); /* Move the element to the left by 50% of its width */
     width: 0;
     height: 2px;
-    background-color: white;
+    background-color: #ffffff;
     transition: width 1s ease;
     transform-origin: left;
   }

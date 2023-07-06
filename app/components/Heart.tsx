@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Mesh, Shape, BackSide, DoubleSide, ExtrudeGeometry, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
@@ -8,7 +9,6 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import * as THREE from 'three';
 import JSONfont from "../Rubik.json";
 
-import { Mesh, Shape, BackSide, DoubleSide, ExtrudeGeometry, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 
 export const Heart = () => {
     const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
@@ -232,7 +232,7 @@ loader.load('Rubik.json', function (font: Font) {
             {/* <shapeGeometry args={[new Shape()]} /> */}
 
 
-            <PerspectiveCamera makeDefault position={[0, 3, 15]} />
+            <PerspectiveCamera makeDefault position={[0, 3, 5]} />
             <OrbitControls autoRotate ref={orbitControlsRef} maxPolarAngle={angleToradians(80)} minPolarAngle={angleToradians(60)} />
             <ThreeDTextComponent />
             <mesh ref={ballRef} position={[-1.2, 0, -0.9]} castShadow >
