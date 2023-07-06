@@ -19,7 +19,7 @@ export const Works = () => {
   const handleClick = (scrollDirection: string) => {
     if (worksRef.current) {
       const { scrollTop, clientHeight } = worksRef.current;
-      const scrollAmount = clientHeight / projects.length;
+      const scrollAmount = clientHeight / (Object.keys(projects).length / 4);
       let scrollPosition = scrollTop;
 
       const scrollAnimation = () => {
