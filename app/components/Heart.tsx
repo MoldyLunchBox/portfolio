@@ -219,20 +219,13 @@ loader.load('Rubik.json', function (font: Font) {
         return <mesh ref={meshRef} position={[-1, 0, -1]} castShadow />;
       };
       
-
+      const lookAtTarget = new THREE.Vector3(0, 1, 0);
     return (
         <>
-            {/* <mesh scale={[0.4, -0.4, 0.4]} >
-    <ambientLight intensity={1} />
-    <directionalLight position={[3,2,1]} />
-    <mesh args={[heart.shape, heart.material]}/>
-    <meshStandardMaterial  color={"red"}/>
-</mesh> */}
-            {/* <shapeGeometry args={[heart]}/> */}
-            {/* <shapeGeometry args={[new Shape()]} /> */}
 
 
-            <PerspectiveCamera makeDefault position={[0, 3, 5]} />
+
+            <PerspectiveCamera makeDefault position={[0, 3, 5]} lookAt={() => lookAtTarget} />
             <OrbitControls autoRotate ref={orbitControlsRef} maxPolarAngle={angleToradians(80)} minPolarAngle={angleToradians(60)} />
             <ThreeDTextComponent />
             <mesh ref={ballRef} position={[-1.2, 0, -0.9]} castShadow >
