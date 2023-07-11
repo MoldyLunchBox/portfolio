@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ChevronUp, ChevronDown } from 'react-feather'
 import { Heart } from './Heart';
+import { ShowCase } from './ShowCase';
 
 export const Works = () => {
   const projects = {
@@ -50,7 +51,7 @@ export const Works = () => {
   return (
     <div className='flex items-center snap-center h-[100vh]'>
       <div className='flex justify-between items-center h-full w-full'>
-        <div className='w-full my-5 py-10  relative flex justify-center max-h-[320px] '>
+        <div className='w-1/4 my-5 py-10  border  relative flex justify-center max-h-[320px] '>
       
           <ChevronUp onClick={() => handleClick('up')} className='text-white cursor-pointer hover:text-[#E3C515] text-center absolute h-10 top-0  bottom-0  ' />
           <ul ref={worksRef} className='flex flex-col  no-scrollbar overflow-y-scroll'>
@@ -66,7 +67,7 @@ export const Works = () => {
         <div className='flex justify-between flex-col   items-center h-full w-full lg:flex-row'>
         <div className='w-full h-full max-h-[50vh]'>
           <Canvas shadows>
-            <Heart />
+            <ShowCase />
           </Canvas>
         </div>
     
