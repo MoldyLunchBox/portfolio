@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ChevronUp, ChevronDown } from 'react-feather'
 import { Heart } from './Heart';
@@ -48,6 +48,12 @@ export const Works = () => {
     }
   };
 
+  const [camRotate, setCamRotate] = useState(0)
+const rotateCamera = ()=>{
+  console.log("clicked", camRotate)
+  const rotat = camRotate + 1
+  setCamRotate(rotat)
+}
   return (
     <div className='flex items-center snap-center h-[100vh]'>
       <div className='flex justify-between items-center h-full w-full'>
@@ -67,9 +73,10 @@ export const Works = () => {
         <div className='flex justify-between flex-col   items-center h-full w-full lg:flex-row'>
         <div className='w-full h-full max-h-[50vh]'>
           <Canvas shadows>
-            <ShowCase />
+            <ShowCase camRotate={camRotate} />
           </Canvas>
         </div>
+        <div onClick={()=>rotateCamera()} className='text-black bg-white'>cam</div>
     
       </div>
         {/* <div className='flex w-full flex-col justify-start gap-4'>

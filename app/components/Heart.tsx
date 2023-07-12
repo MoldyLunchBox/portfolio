@@ -22,10 +22,6 @@ export const Heart = () => {
             orbitControlsRef.current.update()
         }
     })
-    useEffect(() => {
-        if (orbitControlsRef.current)
-            console.log(orbitControlsRef.current)
-    }, [orbitControlsRef.current])
 
     // const Myself = () => {
     //     const loader = new FontLoader();
@@ -225,7 +221,7 @@ loader.load('Rubik.json', function (font: Font) {
 
 
 
-            <PerspectiveCamera makeDefault position={[0, 3, 5]} lookAt={() => lookAtTarget} />
+            <PerspectiveCamera makeDefault position={[0, 3, 5]}  />
             <OrbitControls autoRotate ref={orbitControlsRef} maxPolarAngle={angleToradians(80)} minPolarAngle={angleToradians(60)} />
             <ThreeDTextComponent />
             <mesh ref={ballRef} position={[-1.2, 0, -0.9]} castShadow >
