@@ -51,7 +51,7 @@ export const Works = () => {
   const [camRotate, setCamRotate] = useState(0)
 const rotateCamera = ()=>{
   console.log("clicked", camRotate)
-  const rotat = camRotate + 1
+  const rotat = camRotate + 15
   setCamRotate(rotat)
 }
   return (

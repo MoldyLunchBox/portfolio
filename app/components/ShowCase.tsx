@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Mesh, Shape, BackSide, DoubleSide, ExtrudeGeometry, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 import { gsap } from 'gsap'
@@ -8,11 +8,12 @@ import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import * as THREE from 'three';
 import JSONfont from "../Rubik.json";
+const clock = new THREE.Clock()
 
 interface Props {
-  camRotate : number
+  camRotate: number
 }
-export const ShowCase = ({camRotate}: Props) => {
+export const ShowCase = ({ camRotate }: Props) => {
   const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
   const orbitControlsRef = useRef(null)
 
@@ -217,57 +218,93 @@ export const ShowCase = ({camRotate}: Props) => {
 
     return <mesh ref={meshRef} position={[-1, 0, -1]} castShadow />;
   };
+  const [camLookAt, setCamLookAt] = useState(new THREE.Vector3(-20, 1, 0))
+  const lookAtTarget = new THREE.Vector3(60, 10, 0);
+  const ballRef2 = useRef(undefined)
+  useEffect(() => {
+    isClick = true
 
-  const lookAtTarget = new THREE.Vector3(0, 1, 0);
-const camRotationRef = useRef(lookAtTarget)
+  }, [camRotate])
   const spotlight = useMemo(() => new THREE.SpotLight('#fff'), []);
-  const camRef = useRef(null)
-  const lookAtTarget2 = useRef(lookAtTarget); // Initial look-at target
-  const [rotationAngle, setRotationAngle] = useState(0);
-
-
-   useFrame((state) => {
-    if (orbitControlsRef.current) {
-      console.log(orbitControlsRef.current)
-      
-      orbitControlsRef.current.setAzimuthalAngle(angleToradians(camRotate))
-
-      orbitControlsRef.current.update()
-    }
-  })
-
+  const spotlight2 = useMemo(() => new THREE.SpotLight('#ff0000'), []);
+  const { gl, camera } = useThree();
+  let isClick = false;
+  let oldPos = {
+    x: camera.position.x,
+    y: camera.position.y,
+    z: camera.position.z
+  }
+  console.log("old position for camera: ", oldPos)
+  // useFrame((state, delta) => {
+  //   const time = clock.getElapsedTime()
+  //   const angleInRadians = THREE.MathUtils.degToRad(camRotate);
+  //   const target = new THREE.Vector3(
+  //     camRotate,
+  //     0,
+  //     Math.cos(angleInRadians) * 15
+  //   );
+  //   if (isClick) {
+  //     gsap.to(camera.position, {
+  //       x: () => 50 * Math.cos(angleInRadians),
+  //       y: () => 2,
+  //       z: () => 50 * Math.sin(angleInRadians),
+  //       duration: 0.5
+  //     })
+  //   }
+  //   if (!isClick) {
+  //     gsap.to(camera.position, {
+  //       x: () => oldPos.x,
+  //       y: () => oldPos.y,
+  //       duration: 0.5
+  //     })
+  //   }
+  // });
 
   return (
     <>
 
 
 
-      <PerspectiveCamera ref={camRef} makeDefault position={[0, 2, 0]} lookAt={() => lookAtTarget} />
-      <OrbitControls  ref={orbitControlsRef} maxPolarAngle={angleToradians(80)} minPolarAngle={angleToradians(60)} />
+      <PerspectiveCamera makeDefault position={[0, 2, 50]} lookAt={() => lookAtTarget} />
+      <OrbitControls />
 
+      {/* ball 1 */}
       <mesh ref={ballRef} position={[-1.2, 0, -50]} castShadow >
         <sphereGeometry args={[0.3, 32, 32]} />
         {/* <HeartGeometry /> scale={[0.2, -0.2, 0.2]} */}
         <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
       </mesh>
+
+      {/* ball 2 */}
+      <mesh ref={ballRef2} position={[0, 0, 0]} castShadow >
+        <sphereGeometry args={[0.3, 32, 32]} />
+        {/* <HeartGeometry /> scale={[0.2, -0.2, 0.2]} */}
+        <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
+      </mesh>
+
+      {/* plane */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
         <meshBasicMaterial side={BackSide} color="green" />
         <meshStandardMaterial metalness={1} roughness={0.5} color="white" />
-
       </mesh>
+
       <ambientLight intensity={0.03} />
       {/* directinal light */}
       {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
+ 
+
       <primitive
-        object={spotlight}
+        object={spotlight2}
         intensity={1.5}
         penumbra={0.2}
         castShadow
-        position={[0, 10, 0]}
+        position={[0, 10, -50]}
       />
-      {ballRef.current ?
-        <primitive object={spotlight.target} position={ballRef.current.position} /> : null
+      {
+
+        ballRef.current ? 
+        <primitive object={spotlight.target} position={ballRef.current.position}  /> : null
       }
       {/* <spotLight penumbra={0.3} args={["white", 2, 20, 0.3]}  target={lightTarget3}} /> */}
       {/* environement */}
