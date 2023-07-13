@@ -220,6 +220,8 @@ export const ShowCase = ({ camRotate }: Props) => {
   };
   const [camLookAt, setCamLookAt] = useState(new THREE.Vector3(-20, 1, 0))
   const lookAtTarget = new THREE.Vector3(60, 10, 0);
+  const balltarget = new THREE.Vector3(-1.2, 0, -50);
+
   const ballRef2 = useRef(undefined)
   useEffect(() => {
     isClick = true
@@ -303,8 +305,8 @@ export const ShowCase = ({ camRotate }: Props) => {
       />
       {
 
-        ballRef.current ? 
-        <primitive object={spotlight.target} position={ballRef.current.position}  /> : null
+       
+        <primitive object={spotlight2.target} position={balltarget}  /> 
       }
       {/* <spotLight penumbra={0.3} args={["white", 2, 20, 0.3]}  target={lightTarget3}} /> */}
       {/* environement */}
