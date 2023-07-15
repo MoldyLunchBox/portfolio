@@ -220,7 +220,8 @@ export const ShowCase = ({ camRotate }: Props) => {
   };
   const [camLookAt, setCamLookAt] = useState(new THREE.Vector3(-20, 1, 0))
   const lookAtTarget = new THREE.Vector3(60, 10, 0);
-  const balltarget = new THREE.Vector3(-1.2, 0, -50);
+  const balltarget = new THREE.Vector3(0, 0, -0);
+  const balltarget2 = new THREE.Vector3(0, 0, -10);
 
   const ballRef2 = useRef(undefined)
   useEffect(() => {
@@ -229,6 +230,8 @@ export const ShowCase = ({ camRotate }: Props) => {
   }, [camRotate])
   const spotlight = useMemo(() => new THREE.SpotLight('#fff'), []);
   const spotlight2 = useMemo(() => new THREE.SpotLight('#ff0000'), []);
+  const sunSpotLight = useMemo(() => new THREE.SpotLight('#fff'), []);
+
   const { gl, camera } = useThree();
   let isClick = false;
   let oldPos = {
@@ -237,41 +240,41 @@ export const ShowCase = ({ camRotate }: Props) => {
     z: camera.position.z
   }
   console.log("old position for camera: ", oldPos)
-  // useFrame((state, delta) => {
-  //   const time = clock.getElapsedTime()
-  //   const angleInRadians = THREE.MathUtils.degToRad(camRotate);
-  //   const target = new THREE.Vector3(
-  //     camRotate,
-  //     0,
-  //     Math.cos(angleInRadians) * 15
-  //   );
-  //   if (isClick) {
-  //     gsap.to(camera.position, {
-  //       x: () => 50 * Math.cos(angleInRadians),
-  //       y: () => 2,
-  //       z: () => 50 * Math.sin(angleInRadians),
-  //       duration: 0.5
-  //     })
-  //   }
-  //   if (!isClick) {
-  //     gsap.to(camera.position, {
-  //       x: () => oldPos.x,
-  //       y: () => oldPos.y,
-  //       duration: 0.5
-  //     })
-  //   }
-  // });
+  useFrame((state, delta) => {
+    const time = clock.getElapsedTime()
+    const angleInRadians = THREE.MathUtils.degToRad(camRotate);
+    const target = new THREE.Vector3(
+      camRotate,
+      0,
+      Math.cos(angleInRadians) * 15
+    );
+    if (isClick) {
+      gsap.to(camera.position, {
+        x: () => 50 * Math.sin(angleInRadians),
+        y: () => 2,
+        z: () => 50 * Math.cos(angleInRadians),
+        duration: 0.5
+      })
+    }
+    if (!isClick) {
+      gsap.to(camera.position, {
+        x: () => oldPos.x,
+        y: () => oldPos.y,
+        duration: 0.5
+      })
+    }
+  });
 
   return (
     <>
 
 
 
-      <PerspectiveCamera makeDefault position={[0, 2, 50]} lookAt={() => lookAtTarget} />
+      <PerspectiveCamera makeDefault position={[0, 2, 50]} />
       <OrbitControls />
 
       {/* ball 1 */}
-      <mesh ref={ballRef} position={[-1.2, 0, -50]} castShadow >
+      <mesh ref={ballRef} position={[0, 0, -50]} castShadow >
         <sphereGeometry args={[0.3, 32, 32]} />
         {/* <HeartGeometry /> scale={[0.2, -0.2, 0.2]} */}
         <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
@@ -290,25 +293,44 @@ export const ShowCase = ({ camRotate }: Props) => {
         <meshBasicMaterial side={BackSide} color="green" />
         <meshStandardMaterial metalness={1} roughness={0.5} color="white" />
       </mesh>
+      {/* Ring */}
+    <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
+      <ringGeometry args={[15, 10, 32]}/>
+      <meshStandardMaterial metalness={1} roughness={0.5} color="blue" />
 
-      <ambientLight intensity={0.03} />
+    </mesh>
+      <ambientLight intensity={1.03} />
       {/* directinal light */}
       {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
- 
+
 
       <primitive
         object={spotlight2}
         intensity={1.5}
         penumbra={0.2}
         castShadow
-        position={[0, 10, -50]}
+        position={[0, 10, 0]}
       />
       {
 
-       
-        <primitive object={spotlight2.target} position={balltarget}  /> 
+
+        <primitive object={spotlight2.target} position={balltarget} />
       }
-      {/* <spotLight penumbra={0.3} args={["white", 2, 20, 0.3]}  target={lightTarget3}} /> */}
+
+      <primitive
+        object={spotlight}
+        intensity={1.5}
+        penumbra={0.2}
+        castShadow
+        position={[0, 10, -10]}
+      />
+      {
+
+
+        <primitive object={spotlight.target} position={balltarget2} />
+      }
+  
+      <spotLight penumbra={0.3} args={["white", 60, 90, 10]} position={[0,80, 0]} />
       {/* environement */}
       {/* <Environment background>
             <mesh>
