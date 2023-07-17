@@ -49,36 +49,35 @@ export const Works = () => {
   };
 
   const [camRotate, setCamRotate] = useState(0)
-const rotateCamera = ()=>{
-  console.log("clicked", camRotate)
-  const rotat = camRotate + 15
-  setCamRotate(rotat)
-}
+  const rotateCamera = () => {
+    console.log("clicked", camRotate)
+    const rotat = camRotate + 15
+    setCamRotate(rotat)
+  }
   return (
     <div className='flex items-center snap-center h-[100vh]'>
-      <div className='flex justify-between items-center h-full w-full'>
-        <div className='w-1/4 my-5 py-10  border  relative flex justify-center max-h-[320px] '>
-      
-          <ChevronUp onClick={() => handleClick('up')} className='text-white cursor-pointer hover:text-[#E3C515] text-center absolute h-10 top-0  bottom-0  ' />
-          <ul ref={worksRef} className='flex flex-col  no-scrollbar overflow-y-scroll'>
-            {Object.entries(projects).map(([key, value]) => (
-              <div key={key} className='flex justify-center'>
-                <li className='my-2 inline-block text-white p-1   cursor-pointer  font-semibold text-2xl worksElements'>{key}</li>
-              </div>
-            ))}
-          </ul>
-          <ChevronDown onClick={() => handleClick('down')} className='text-white cursor-pointer hover:text-[#E3C515]  absolute h-10  bottom-0' />
+      <div className='flex justify-between flex-wrap items-center h-full w-full'>
 
-        </div>
-        <div className='flex justify-between flex-col   items-center h-full w-full lg:flex-row'>
-        <div className='w-full h-full max-h-[50vh]'>
-          <Canvas shadows>
-            <ShowCase camRotate={camRotate} />
-          </Canvas>
-        </div>
-        <div onClick={()=>rotateCamera()} className='text-black bg-white'>cam</div>
-    
-      </div>
+          <div className=' flex w-full h-full max-h-[80vh]  relative'>
+            <Canvas shadows>
+              <ShowCase camRotate={camRotate} />
+            </Canvas>
+            <div className='w-1/4 my-5 py-10   top-0  flex  absolute justify-center max-h-[30vh] '>
+
+              <ChevronUp onClick={() => handleClick('up')} className='text-white cursor-pointer hover:text-[#E3C515] text-center absolute h-10 top-0  bottom-0  ' />
+              <ul ref={worksRef} className='flex flex-auto flex-col no-scrollbar overflow-y-scroll'>
+                {Object.entries(projects).map(([key, value]) => (
+                  <div key={key} className='flex justify-center'>
+                    <li className='my-2 inline-block text-white p-1   cursor-pointer  font-semibold text-sm worksElements md:text-2xl'>{key}</li>
+                  </div>
+                ))}
+              </ul>
+              <ChevronDown onClick={() => handleClick('down')} className='text-white cursor-pointer hover:text-[#E3C515]  absolute h-10  bottom-0' />
+
+            </div>
+          </div>
+          {/* <div onClick={() => rotateCamera()} className='text-black bg-white'>cam</div> */}
+
         {/* <div className='flex w-full flex-col justify-start gap-4'>
           <h1 className='text-white text-4xl font-bold'>Feel, Think, Design</h1>
           <h1 className='text-[#E3C515] font-semibold'>-- Who am I</h1>

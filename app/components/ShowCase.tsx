@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Environment, OrbitControls, PerspectiveCamera, useTexture } from '@react-three/drei'
 import { Mesh, Shape, BackSide, DoubleSide, ExtrudeGeometry, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
@@ -265,6 +265,8 @@ export const ShowCase = ({ camRotate }: Props) => {
     }
   });
 
+  const texture = useTexture('./img/gomoku.jpg');
+
   return (
     <>
 
@@ -281,24 +283,32 @@ export const ShowCase = ({ camRotate }: Props) => {
       </mesh>
 
       {/* ball 2 */}
-      <mesh ref={ballRef2} position={[0, 0, 0]} castShadow >
+      <mesh ref={ballRef2} position={[0, 3, 0]} castShadow >
         <sphereGeometry args={[0.3, 32, 32]} />
         {/* <HeartGeometry /> scale={[0.2, -0.2, 0.2]} */}
         <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
       </mesh>
 
-      {/* plane */}
+      {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
         <meshBasicMaterial side={BackSide} color="green" />
         <meshStandardMaterial metalness={1} roughness={0.5} color="white" />
       </mesh>
-      {/* Ring */}
-    <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
-      <ringGeometry args={[15, 10, 32]}/>
-      <meshStandardMaterial metalness={1} roughness={0.5} color="blue" />
 
-    </mesh>
+      {/* showcase frame */}
+      <mesh  position={[0, 4, 30]} castShadow>
+        {/* <planeGeometry args={[10, 10]} /> */}
+        <boxGeometry args={[10,10,5]} />
+        <meshStandardMaterial side={DoubleSide} map={texture} metalness={1.3} roughness={0.5} color="white" />
+      </mesh>
+
+      {/* Ring */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
+        <ringGeometry args={[15, 10, 32]} />
+        <meshStandardMaterial metalness={1} roughness={0.5} color="blue" />
+
+      </mesh>
       <ambientLight intensity={1.03} />
       {/* directinal light */}
       {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
@@ -329,8 +339,8 @@ export const ShowCase = ({ camRotate }: Props) => {
 
         <primitive object={spotlight.target} position={balltarget2} />
       }
-  
-      <spotLight penumbra={0.3} args={["white", 60, 90, 10]} position={[0,80, 0]} />
+
+      <spotLight castShadow penumbra={0.3} args={["white", 60, 95, 10]} position={[0, 80, 0]} />
       {/* environement */}
       {/* <Environment background>
             <mesh>
