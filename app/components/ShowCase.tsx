@@ -265,7 +265,27 @@ export const ShowCase = ({ camRotate }: Props) => {
     }
   });
 
+
+  // project showcase info
   const texture = useTexture('./img/gomoku.jpg');
+  const angle = 40
+  const radius = 30
+  const projects = [
+    {
+      name: "gomoku",
+      screenshot: useTexture('./img/gomoku.jpg'),
+    },
+    {
+      name: "gomoku",
+      screenshot: useTexture('./img/gomoku.jpg'),
+    },
+    {
+      name: "gomoku",
+      screenshot: useTexture('./img/gomoku.jpg'),
+    }
+  ]
+
+  const colors = ['#00FF00', '#FF0000', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
 
   return (
     <>
@@ -274,6 +294,16 @@ export const ShowCase = ({ camRotate }: Props) => {
 
       <PerspectiveCamera makeDefault position={[0, 2, 50]} />
       <OrbitControls />
+
+      <mesh  >
+        <boxGeometry attach="geometry" args={[2, 2, 2]} />
+        <meshBasicMaterial attach="material-0" color="#00FF00" />
+        <meshBasicMaterial attach="material-1" color="#ffffff" />
+        <meshBasicMaterial attach="material-2" color="#0000ff" />
+        <meshBasicMaterial attach="material-3" color="#0f00ff" />
+        <meshBasicMaterial attach="material-4" color="#000000" />
+
+      </mesh>
 
       {/* ball 1 */}
       <mesh ref={ballRef} position={[0, 0, -50]} castShadow >
@@ -292,16 +322,25 @@ export const ShowCase = ({ camRotate }: Props) => {
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
-        <meshBasicMaterial side={BackSide} color="green" />
-        <meshStandardMaterial metalness={1} roughness={0.5} color="white" />
+        <meshStandardMaterial metalness={1} side={DoubleSide}  roughness={0.5} color="white" />
       </mesh>
 
-      {/* showcase frame */}
-      <mesh  position={[0, 4, 30]} castShadow>
-        {/* <planeGeometry args={[10, 10]} /> */}
-        <boxGeometry args={[10,10,5]} />
-        <meshStandardMaterial side={DoubleSide} map={texture} metalness={1.3} roughness={0.5} color="white" />
-      </mesh>
+      {/* showcase frames */}
+      {projects.map((project, index) => {
+        return (
+
+          <mesh key={index} rotation={[0, angleToradians(angle) * index, 0]} position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index))]} castShadow>
+            <boxGeometry args={[10, 10, 0.2]} />
+            <meshBasicMaterial attach="material-0" color="#000000" />
+            <meshBasicMaterial attach="material-1" color="#000000" />
+            <meshBasicMaterial attach="material-5" color="#000000" />
+
+            <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={1.3} roughness={0.5} color="white" />
+          </mesh>
+
+        )
+      })}
+
 
       {/* Ring */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
@@ -339,8 +378,18 @@ export const ShowCase = ({ camRotate }: Props) => {
 
         <primitive object={spotlight.target} position={balltarget2} />
       }
-
-      <spotLight castShadow penumbra={0.3} args={["white", 60, 95, 10]} position={[0, 80, 0]} />
+{/* <spotLight
+  castShadow
+  penumbra={0.3}
+  angle={Math.PI / 3}
+  intensity={0.8}
+  shadow-mapSize-width={1024}
+  shadow-mapSize-height={1024}
+  shadow-bias={-0.001}
+  position={[0, 80, 0]}
+/> */}
+      <spotLight   shadow-mapSize-width={1024}
+  shadow-mapSize-height={1024}  castShadow penumbra={0.3} args={["white", 60, 95, 10,10,3]} position={[0, 80, 0]} />
       {/* environement */}
       {/* <Environment background>
             <mesh>

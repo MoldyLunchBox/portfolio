@@ -51,7 +51,7 @@ export const Works = () => {
   const [camRotate, setCamRotate] = useState(0)
   const rotateCamera = () => {
     console.log("clicked", camRotate)
-    const rotat = camRotate + 15
+    const rotat = camRotate + 40
     setCamRotate(rotat)
   }
   return (
@@ -76,7 +76,7 @@ export const Works = () => {
 
             </div>
           </div>
-          {/* <div onClick={() => rotateCamera()} className='text-black bg-white'>cam</div> */}
+          <div onClick={() => rotateCamera()} className='text-black bg-white'>cam</div>
 
         {/* <div className='flex w-full flex-col justify-start gap-4'>
           <h1 className='text-white text-4xl font-bold'>Feel, Think, Design</h1>
