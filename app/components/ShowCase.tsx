@@ -231,7 +231,7 @@ export const ShowCase = ({ camRotate }: Props) => {
 
   }, [camRotate])
   const spotlight = useMemo(() => new THREE.SpotLight('#fff'), []);
-  const spotlight2 = useMemo(() => new THREE.SpotLight('#ff0000'), []);
+  const spotlight2 = useMemo(() => new THREE.SpotLight('#fff'), []);
   const sunSpotLight = useMemo(() => new THREE.SpotLight('#fff'), []);
 
   const { gl, camera } = useThree();
@@ -259,7 +259,7 @@ export const ShowCase = ({ camRotate }: Props) => {
 
       gsap.to(cameraLight.current.position, {
         x: target.x,
-        y: target.y,
+        y: target.y + 5,
         z: target.z,
         duration: 0.2,
         ease: "power2.inOut" // Use a curved easing function for a smoother animation
@@ -277,7 +277,7 @@ export const ShowCase = ({ camRotate }: Props) => {
     if (!isClick) {
       gsap.to(cameraLight.current.position, {
         x: oldPos.x,
-        y: oldPos.y,
+        y: oldPos.y + 5,
         z: oldPos.z,
         duration: 0.5,
         ease: "power2.inOut" // Use a curved easing function for a smoother animation
@@ -325,17 +325,6 @@ export const ShowCase = ({ camRotate }: Props) => {
 
       <PerspectiveCamera makeDefault position={[0, 2, 50]} />
       <OrbitControls />
-
-      <mesh>
-        <boxGeometry attach="geometry" args={[2, 2, 2]} />
-        <meshBasicMaterial attach="material-0" color="#00FF00" />
-        <meshBasicMaterial attach="material-1" color="#ffffff" />
-        <meshBasicMaterial attach="material-2" color="#0000ff" />
-        <meshBasicMaterial attach="material-3" color="#0f00ff" />
-        <meshBasicMaterial attach="material-4" color="#000000" />
-
-      </mesh>
-
       {/* ball 1 */}
       {/* <mesh ref={ballRef} position={[0, 0, -50]} castShadow >
         <sphereGeometry args={[0.3, 32, 32]} />
@@ -343,11 +332,15 @@ export const ShowCase = ({ camRotate }: Props) => {
       </mesh> */}
 
       {/* ball 2 */}
-      <mesh ref={ballRef2} position={[0, 3, 0]} castShadow >
+      {/* <mesh ref={ballRef2} position={[0, 3, 0]} castShadow >
         <sphereGeometry args={[0.3, 32, 32]} />
-        {/* <HeartGeometry /> scale={[0.2, -0.2, 0.2]} */}
+roughness: 0.8,
+					color: 0xffffff,
+					metalness: 0.2,
+					bumpScale: 0.0005
+
         <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
-      </mesh>
+      </mesh> */}
 
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
@@ -365,7 +358,7 @@ export const ShowCase = ({ camRotate }: Props) => {
             <meshBasicMaterial attach="material-1" color="#000000" />
             <meshBasicMaterial attach="material-5" color="#000000" />
 
-            <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={1.3} roughness={0.5} color="white" />
+            <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={0.2} roughness={0.8} bumpScale={0.0005} color="white" />
           </mesh>
 
         )
@@ -381,17 +374,45 @@ export const ShowCase = ({ camRotate }: Props) => {
         <meshStandardMaterial   metalness={1} roughness={1}   color="blue" />
 
       </mesh>
-      <ambientLight intensity={1.03} />
+      <ambientLight intensity={0.2} />
       {/* directinal light */}
       {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
 
     
+      {/* <primitive
+        object={spotlight2}
+        intensity={0.5}
+        penumbra={1}
+        castShadow
+        position={[0, 20, -10]}
+      />
+      {
+
+
+        <primitive object={spotlight2.target} position={balltarget} />
+      } */}
+
+      {/* <primitive
+        object={spotlight}
+        intensity={1.5}
+        penumbra={0.2}
+        castShadow
+        position={[0, 10, -10]}
+      />
+      {
+
+
+        <primitive object={spotlight.target} position={balltarget2} />
+      } */}
+
+
 
       <spotLight shadow-mapSize-width={1024}
         shadow-mapSize-height={1024} castShadow penumbra={0.3} args={["white", 60, 95, 10, 10, 3]} position={[0, 80, 0]} />
 
+<spotLight  castShadow penumbra={0.3} args={["white", 20, 12, 1]} position={[0, 8, 40]} />
 
-      <spotLight ref={cameraLight} castShadow penumbra={0.3} args={["white", 20, 10]} position={[0, 8, 37]} />
+      <spotLight ref={cameraLight} castShadow penumbra={0.3} args={["white", 0, 0, 0]} position={[0, 8, 32]} />
       {/* environement */}
       {/* <Environment background>
             <mesh>
