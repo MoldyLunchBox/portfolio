@@ -16,7 +16,7 @@ interface Props {
 export const ShowCase = ({ camRotate }: Props) => {
   const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
   const orbitControlsRef = useRef(null)
-
+  const cameraLight = useRef(null)
   useFrame((state) => {
     if (orbitControlsRef.current) {
       const { x, y } = state.mouse
@@ -248,7 +248,13 @@ export const ShowCase = ({ camRotate }: Props) => {
       0,
       Math.cos(angleInRadians) * 15
     );
-    if (isClick) {
+    if (isClick && cameraLight.current) {
+      gsap.to(cameraLight.current.position, {
+        x: () => 50 * Math.sin(angleInRadians),
+        y: () => 2,
+        z: () => 50 * Math.cos(angleInRadians),
+        duration: 0.5
+      })
       gsap.to(camera.position, {
         x: () => 50 * Math.sin(angleInRadians),
         y: () => 2,
@@ -257,6 +263,12 @@ export const ShowCase = ({ camRotate }: Props) => {
       })
     }
     if (!isClick) {
+      gsap.to(cameraLight.current.position, {
+        x: () => oldPos.x,
+        y: () => oldPos.y,
+        z: () => oldPos.z,
+        duration: 0.5
+      })
       gsap.to(camera.position, {
         x: () => oldPos.x,
         y: () => oldPos.y,
@@ -268,20 +280,23 @@ export const ShowCase = ({ camRotate }: Props) => {
 
   // project showcase info
   const texture = useTexture('./img/gomoku.jpg');
-  const angle = 40
+  const angle = 90
   const radius = 30
   const projects = [
     {
       name: "gomoku",
       screenshot: useTexture('./img/gomoku.jpg'),
+      light: useMemo(() => new THREE.SpotLight('#fff'), [])
     },
     {
       name: "gomoku",
       screenshot: useTexture('./img/gomoku.jpg'),
+      light: useMemo(() => new THREE.SpotLight('#fff'), [])
     },
     {
       name: "gomoku",
       screenshot: useTexture('./img/gomoku.jpg'),
+      light: useMemo(() => new THREE.SpotLight('#fff'), [])
     }
   ]
 
@@ -295,7 +310,7 @@ export const ShowCase = ({ camRotate }: Props) => {
       <PerspectiveCamera makeDefault position={[0, 2, 50]} />
       <OrbitControls />
 
-      <mesh  >
+      <mesh>
         <boxGeometry attach="geometry" args={[2, 2, 2]} />
         <meshBasicMaterial attach="material-0" color="#00FF00" />
         <meshBasicMaterial attach="material-1" color="#ffffff" />
@@ -306,11 +321,10 @@ export const ShowCase = ({ camRotate }: Props) => {
       </mesh>
 
       {/* ball 1 */}
-      <mesh ref={ballRef} position={[0, 0, -50]} castShadow >
+      {/* <mesh ref={ballRef} position={[0, 0, -50]} castShadow >
         <sphereGeometry args={[0.3, 32, 32]} />
-        {/* <HeartGeometry /> scale={[0.2, -0.2, 0.2]} */}
         <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
-      </mesh>
+      </mesh> */}
 
       {/* ball 2 */}
       <mesh ref={ballRef2} position={[0, 3, 0]} castShadow >
@@ -322,7 +336,7 @@ export const ShowCase = ({ camRotate }: Props) => {
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
-        <meshStandardMaterial metalness={1} side={DoubleSide}  roughness={0.5} color="white" />
+        <meshStandardMaterial metalness={1} side={DoubleSide} roughness={0.5} color="white" />
       </mesh>
 
       {/* showcase frames */}
@@ -343,9 +357,10 @@ export const ShowCase = ({ camRotate }: Props) => {
 
 
       {/* Ring */}
-      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
-        <ringGeometry args={[15, 10, 32]} />
-        <meshStandardMaterial metalness={1} roughness={0.5} color="blue" />
+      <mesh  receiveShadow rotation={[Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
+        <ringGeometry args={[40, 30, 32]} />
+        
+        <meshStandardMaterial metalness={1.2} roughness={0.5}  side={DoubleSide} color="white" />
 
       </mesh>
       <ambientLight intensity={1.03} />
@@ -378,18 +393,13 @@ export const ShowCase = ({ camRotate }: Props) => {
 
         <primitive object={spotlight.target} position={balltarget2} />
       }
-{/* <spotLight
-  castShadow
-  penumbra={0.3}
-  angle={Math.PI / 3}
-  intensity={0.8}
-  shadow-mapSize-width={1024}
-  shadow-mapSize-height={1024}
-  shadow-bias={-0.001}
-  position={[0, 80, 0]}
-/> */}
-      <spotLight   shadow-mapSize-width={1024}
-  shadow-mapSize-height={1024}  castShadow penumbra={0.3} args={["white", 60, 95, 10,10,3]} position={[0, 80, 0]} />
+
+      <spotLight shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024} castShadow penumbra={0.3} args={["white", 60, 95, 10, 10, 3]} position={[0, 80, 0]} />
+
+
+
+      <spotLight ref={cameraLight} castShadow penumbra={0.3} args={["white", 20, 10]} position={[0, 8, 37]} />
       {/* environement */}
       {/* <Environment background>
             <mesh>
