@@ -53,13 +53,31 @@ export const Works = () => {
   //   }
   // };
 
+
+  const rotateCamera = () => {
+    let camRotation = 0
+    const intervalId = setInterval(() => {
+ 
+      console.log(camRotation)
+        setCamRotate((prevVal) => prevVal + 1 )
+  
+        camRotation++
+      if (camRotation === 90) {
+        clearInterval(intervalId); // Stop the interval after it has executed 5 times
+        camRotation = 0
+      }
+    }, 10);
+
+
+  }
+
   const [camRotate, setCamRotate] = useState(0)
   const defaultAngle = 90
-  const rotateCamera = () => {
-    console.log("clicked", camRotate)
-    const rotat = camRotate + defaultAngle
-    setCamRotate(rotat)
-  }
+  // const rotateCamera = () => {
+  //   console.log("clicked", camRotate)
+  //   const rotat = camRotate + defaultAngle
+  //   setCamRotate(rotat)
+  // }
   return (
     <div className='flex items-center snap-center h-[100vh]'>
       <div className='flex flex-wrap items-center h-full w-full'>

@@ -8,6 +8,7 @@ import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import * as THREE from 'three';
 import JSONfont from "../Rubik.json";
+import { userAgent } from 'next/server';
 const clock = new THREE.Clock()
 
 interface Props {
@@ -17,6 +18,7 @@ export const ShowCase = ({ camRotate }: Props) => {
   const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
   const orbitControlsRef = useRef(null)
   const cameraLight = useRef(null)
+  const centerShape = useRef(null)
   useFrame((state) => {
     if (orbitControlsRef.current) {
       const { x, y } = state.mouse
@@ -239,44 +241,58 @@ export const ShowCase = ({ camRotate }: Props) => {
     y: camera.position.y,
     z: camera.position.z
   }
-  console.log("old position for camera: ", oldPos)
-  useFrame((state, delta) => {
-    const time = clock.getElapsedTime()
+  useFrame(() => {
     const angleInRadians = THREE.MathUtils.degToRad(camRotate);
-    const target = new THREE.Vector3(
-      camRotate,
-      0,
-      Math.cos(angleInRadians) * 15
-    );
-    if (isClick && cameraLight.current) {
-      gsap.to(cameraLight.current.position, {
-        x: () => 50 * Math.sin(angleInRadians),
-        y: () => 2,
-        z: () => 50 * Math.cos(angleInRadians),
-        duration: 0.5
-      })
-      gsap.to(camera.position, {
-        x: () => 50 * Math.sin(angleInRadians),
-        y: () => 2,
-        z: () => 50 * Math.cos(angleInRadians),
-        duration: 0.5
-      })
+    const radius = 50;
+
+    if (centerShape.current){
+      centerShape.current.rotation.x += 0.005;
+      centerShape.current.rotation.y += 0.01;
     }
+
+    if (isClick && cameraLight.current) {
+      const target = new THREE.Vector3(
+        radius * Math.sin(angleInRadians),
+        2,
+        radius * Math.cos(angleInRadians)
+      );
+
+      gsap.to(cameraLight.current.position, {
+        x: target.x,
+        y: target.y,
+        z: target.z,
+        duration: 0.2,
+        ease: "power2.inOut" // Use a curved easing function for a smoother animation
+      });
+
+      gsap.to(camera.position, {
+        x: target.x,
+        y: target.y,
+        z: target.z,
+        duration: 0.2,
+        ease: "power2.inOut" // Use a curved easing function for a smoother animation
+      });
+    }
+
     if (!isClick) {
       gsap.to(cameraLight.current.position, {
-        x: () => oldPos.x,
-        y: () => oldPos.y,
-        z: () => oldPos.z,
-        duration: 0.5
-      })
+        x: oldPos.x,
+        y: oldPos.y,
+        z: oldPos.z,
+        duration: 0.5,
+        ease: "power2.inOut" // Use a curved easing function for a smoother animation
+      });
+
       gsap.to(camera.position, {
-        x: () => oldPos.x,
-        y: () => oldPos.y,
-        duration: 0.5
-      })
+        x: oldPos.x,
+        y: oldPos.y,
+        z: oldPos.z,
+        duration: 0.5,
+        ease: "power2.inOut" // Use a curved easing function for a smoother animation
+      });
     }
   });
-
+  
 
   // project showcase info
   const texture = useTexture('./img/gomoku.jpg');
@@ -356,47 +372,23 @@ export const ShowCase = ({ camRotate }: Props) => {
       })}
 
 
-      {/* Ring */}
-      <mesh  receiveShadow rotation={[Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
-        <ringGeometry args={[40, 30, 32]} />
-        
-        <meshStandardMaterial metalness={1.2} roughness={0.5}  side={DoubleSide} color="white" />
+      {/* Ring rotation={[Math.PI / 2, 0, 0]}  */}
+      <mesh ref={centerShape} receiveShadow castShadow position={[0, 10, 0]}>
+        {/* <ringGeometry args={[35, 34, 32]} /> */}
+        <torusKnotGeometry args={[ 4, 1.2, 100, 35 ]}/>
+                {/* <torusGeometry args={[3, 0.5, 20, 2999]} /> */}
+       {/* < cylinderGeometry args={[6, 6, 1.5, 64, 1, false]} /> */}
+        <meshStandardMaterial   metalness={1} roughness={1}   color="blue" />
 
       </mesh>
       <ambientLight intensity={1.03} />
       {/* directinal light */}
       {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
 
-
-      <primitive
-        object={spotlight2}
-        intensity={1.5}
-        penumbra={0.2}
-        castShadow
-        position={[0, 10, 0]}
-      />
-      {
-
-
-        <primitive object={spotlight2.target} position={balltarget} />
-      }
-
-      <primitive
-        object={spotlight}
-        intensity={1.5}
-        penumbra={0.2}
-        castShadow
-        position={[0, 10, -10]}
-      />
-      {
-
-
-        <primitive object={spotlight.target} position={balltarget2} />
-      }
+    
 
       <spotLight shadow-mapSize-width={1024}
         shadow-mapSize-height={1024} castShadow penumbra={0.3} args={["white", 60, 95, 10, 10, 3]} position={[0, 80, 0]} />
-
 
 
       <spotLight ref={cameraLight} castShadow penumbra={0.3} args={["white", 20, 10]} position={[0, 8, 37]} />
