@@ -238,7 +238,7 @@ export const ShowCase = ({ camRotate }: Props) => {
   let isClick = false;
   let oldPos = {
     x: camera.position.x,
-    y: camera.position.y,
+    y: 200,
     z: camera.position.z
   }
   useFrame(() => {
@@ -250,13 +250,13 @@ export const ShowCase = ({ camRotate }: Props) => {
       centerShape.current.rotation.y += 0.01;
     }
 
-    if (isClick && cameraLight.current) {
+    if (isClick) {
       const target = new THREE.Vector3(
         radius * Math.sin(angleInRadians),
         2,
         radius * Math.cos(angleInRadians)
       );
-
+ if (cameraLight.current)
       gsap.to(cameraLight.current.position, {
         x: target.x,
         y: target.y + 5,
@@ -264,7 +264,7 @@ export const ShowCase = ({ camRotate }: Props) => {
         duration: 0.2,
         ease: "power2.inOut" // Use a curved easing function for a smoother animation
       });
-
+     
       gsap.to(camera.position, {
         x: target.x,
         y: target.y,
@@ -275,6 +275,7 @@ export const ShowCase = ({ camRotate }: Props) => {
     }
 
     if (!isClick) {
+      if (cameraLight.current)
       gsap.to(cameraLight.current.position, {
         x: oldPos.x,
         y: oldPos.y + 5,
@@ -318,23 +319,48 @@ export const ShowCase = ({ camRotate }: Props) => {
 
   const meshProjects = projects.map((project, index) => {
     return (
-      <mesh key={index} rotation={[0, angleToradians(angle) * index, 0]} position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index))]} castShadow>
+      <mesh key={index} rotation={[0, angleToradians(angle) * index, 0]} 
+      position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index))]} 
+      
+      castShadow>
+
         <boxGeometry args={[10, 10, 0.2]} />
         <meshBasicMaterial attach="material-0" color="#000000" />
         <meshBasicMaterial attach="material-1" color="#000000" />
         <meshBasicMaterial attach="material-5" color="#000000" />
+
+        <primitive
+          castShadow penumbra={0.3} 
+          intensity={30}
+          distance={40}
+          angle={0.25}
+          color={"white"}
+          // args={["white", 20, 12, 0.5]}
+          // distance angle penumbra decay focus position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)) < 0 ? radius * Math.cos(angleToradians(angle * index)) - 10 : radius * Math.cos(angleToradians(angle * index)) + 10]}
+         position={[0,5,36]}
+        // position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)) < 0 ? (radius * Math.cos(angleToradians(angle * index))) - 2 : (radius * Math.cos(angleToradians(angle * index))) + 2]}
+           object={project.light}
+
+        />
+        {
+          <primitive object={project.light.target} 
+          // position={new THREE.Vector3(radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)))}
+          // position={new THREE.Vector3(radius * Math.sin(angleToradians(angle) * index), 0, radius * Math.cos(angleToradians(angle * index)) )}
+          />
+        }
+
         <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={0.2} roughness={0.8} bumpScale={0.0005} color="white" />
       </mesh>
     )
   })
-  
-  // Calculate the target positions for each spotlight
-const spotlightTargets = meshProjects.map((mesh) => {
-  const targetPosition = mesh.props.position.slice();
-  targetPosition[2] += 10; // Add +10 to the z position
-  return targetPosition;
-});
 
+  // // Calculate the target positions for each spotlight
+  // const spotlightTargets = meshProjects.map((mesh) => {
+  //   const targetPosition = mesh.props.position.slice();
+  //   targetPosition[2] += 10; // Add +10 to the z position
+  //   return targetPosition;
+  // });
+  console.log(meshProjects)
   const colors = ['#00FF00', '#FF0000', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
 
   return (
@@ -364,32 +390,23 @@ roughness: 0.8,
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
-        <meshStandardMaterial metalness={1} side={DoubleSide} roughness={0.5} color="white" />
+        <meshStandardMaterial map={ useTexture('./img/road.jpg')} metalness={1} side={DoubleSide} roughness={0.5} color="white" />
+      </mesh>
+
+
+      <mesh rotation={[-angleToradians(90), 0, 0]} position={[0,1,0]} receiveShadow>
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial map={ useTexture('./img/road2.jpg')} metalness={1} side={DoubleSide} roughness={0.5} color="white" />
       </mesh>
 
       {/* showcase frames */}
       <group>
-    {meshProjects.map((mesh, index) => (
-      <React.Fragment key={index}>
-        {/* Your custom mesh */}
-        {mesh}
-
-        {/* Calculate the position of the target */}
-        {/* SpotLight with the target set to the calculated position */}
-        <spotLight
-          penumbra={0.3}
-          color="white"
-          intensity={2}
-          distance={20}
-          angle={Math.PI / 4}
-          decay={1}
-          position={[0, 10, 0]} // Set the light's position as desired
-          target={spotlightTargets[index]} // Set the target with the calculated position
-          castShadow
-        />
-      </React.Fragment>
-    ))}
-  </group>
+        {meshProjects.map((mesh, index) => (
+          <React.Fragment key={index}>
+            {mesh}
+          </React.Fragment>
+        ))}
+      </group>
 
 
       {/* Ring rotation={[Math.PI / 2, 0, 0]}  */}
@@ -401,7 +418,7 @@ roughness: 0.8,
         <meshStandardMaterial metalness={1} roughness={1} color="blue" />
 
       </mesh>
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.1} />
       {/* directinal light */}
       {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
 
@@ -436,10 +453,10 @@ roughness: 0.8,
 
       <spotLight shadow-mapSize-width={1024}
         shadow-mapSize-height={1024} castShadow penumbra={0.3} args={["white", 60, 95, 10, 10, 3]} position={[0, 80, 0]} />
+      {/* <spotLight ref={cameraLight} castShadow penumbra={0.3} args={["white", 0, 0, 0]} position={[0, 8, 32]} /> */}
 
       {/* <spotLight  castShadow penumbra={0.3} args={["white", 20, 12, 1]} position={[0, 8, 40]} /> */}
 
-      <spotLight ref={cameraLight} castShadow penumbra={0.3} args={["white", 0, 0, 0]} position={[0, 8, 32]} />
       {/* environement */}
       {/* <Environment background>
             <mesh>
