@@ -9,6 +9,8 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import * as THREE from 'three';
 import JSONfont from "../Rubik.json";
 import { userAgent } from 'next/server';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import { useLoader } from '@react-three/fiber'
 const clock = new THREE.Clock()
 
 interface Props {
@@ -316,7 +318,29 @@ export const ShowCase = ({ camRotate }: Props) => {
       light: useMemo(() => new THREE.SpotLight('#fff'), [])
     }
   ]
+  const loader = new FBXLoader();
+  loader.load( 'models/fbx/Samba Dancing.fbx', function ( object ) {
 
+    const mixer = new THREE.AnimationMixer( object );
+
+    const action = mixer.clipAction( object.animations[ 0 ] );
+    action.play();
+
+    object.traverse( function ( child ) {
+
+      if ( child.isMesh ) {
+
+        child.castShadow = true;
+        child.receiveShadow = true;
+
+      }
+
+    } );
+
+
+  } );
+  
+  const fbx = useLoader(FBXLoader, './models/walk.fbx')
   const meshProjects = projects.map((project, index) => {
     return (
       <mesh key={index} rotation={[0, angleToradians(angle) * index, 0]} 
@@ -387,6 +411,7 @@ roughness: 0.8,
         <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
       </mesh> */}
 
+ <primitive object={fbx} />
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
