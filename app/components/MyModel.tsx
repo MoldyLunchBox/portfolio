@@ -20,7 +20,7 @@ export const MyModel = () => {
       action.setLoop(THREE.LoopRepeat); // Set animation to repeat
       // action.clampWhenFinished = true; // Ensure animation doesn't blend into the next one
       action.play();
- 
+
       fbxModel.scale.set(0.01, 0.01, 0.01);
       // Add the fbxModel to the group, not the scene
       group.current.add(fbxModel);
@@ -44,34 +44,34 @@ export const MyModel = () => {
     if (isWalking && animationAction.current) {
       // Move the model forward in the circle path
       // Calculate the rotation angle based on the difference in positions
-      const rotationAngle = Math.atan2(x - group.current.position.x, z - group.current.position.z);
-      
+
       // Set the position and rotation of the group
-      
-      
+
+
       // Check if the animation loop has restarted
       const currentTime = animationAction.current.time;
       const prevTime = prevTimeRef.current;
       if (currentTime < prevTime) {
-      setAngle((prev) => prev + 0.2);
-  
-      // Calculate new position in the circle path
-      const angleInRadians = THREE.MathUtils.degToRad(angle);
-      const x = 40 * Math.sin(angleInRadians);
-      const z = 40 * Math.cos(angleInRadians);
-  
-      // Animation loop has restarted, do something here
-      console.log('Animation loop has restarted.');
-      group.current.position.x = x;
-      group.current.position.z = z;
-      group.current.position.y = 1;
+        setAngle((prev) => prev + 2.1);
 
-      group.current.rotation.y = rotationAngle;
-    }
+        // Calculate new position in the circle path
+        const angleInRadians = THREE.MathUtils.degToRad(angle);
+        const x = 40 * Math.sin(angleInRadians);
+        const z = 40 * Math.cos(angleInRadians);
+        const rotationAngle = Math.atan2(x - group.current.position.x, z - group.current.position.z);
 
-    prevTimeRef.current = currentTime;
+        // Animation loop has restarted, do something here
+        console.log('Animation loop has restarted.');
+        group.current.position.x = x;
+        group.current.position.z = z;
+        group.current.position.y = 1;
 
-      prevAngle.current = rotationAngle;
+        group.current.rotation.y = rotationAngle;
+        prevAngle.current = rotationAngle;
+      }
+      prevTimeRef.current = currentTime;
+
+
     }
   });
 
