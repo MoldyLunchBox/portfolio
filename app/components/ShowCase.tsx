@@ -11,6 +11,7 @@ import JSONfont from "../Rubik.json";
 import { userAgent } from 'next/server';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { useLoader } from '@react-three/fiber'
+import { MyModel } from './MyModel';
 const clock = new THREE.Clock()
 
 interface Props {
@@ -410,8 +411,8 @@ roughness: 0.8,
 
         <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
       </mesh> */}
-
- <primitive object={fbx} />
+<MyModel />
+ {/* <primitive object={fbx} /> */}
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
@@ -425,13 +426,13 @@ roughness: 0.8,
       </mesh>
 
       {/* showcase frames */}
-      <group>
+      {/* <group>
         {meshProjects.map((mesh, index) => (
           <React.Fragment key={index}>
             {mesh}
           </React.Fragment>
         ))}
-      </group>
+      </group> */}
 
 
       {/* Ring rotation={[Math.PI / 2, 0, 0]}  */}
