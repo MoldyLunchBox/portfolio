@@ -51,19 +51,27 @@ export const Whoami = () => {
   // })
   return (
     <div className='flex items-center snap-center h-[100vh]'>
-      <div className='flex justify-between flex-col   items-center h-full w-full lg:flex-row'>
-        <div className='w-full h-full max-h-[50vh]'>
-          <Canvas shadows>
+
+
+<div className='flex flex-col md:flex-row justify-center items-center h-full w-full'>
+        <div className='flex w-full flex-col min-w-[280px] max-w-[500px] justify-center text-center md:text-left gap-4 '>
+          <h1 className='text-white text-4xl bold font-semibold'>Boundary-Pushing Techie</h1>
+          <h1 className='text-[#E3C515] md:text-xl font-semibold'> -- professional history</h1>
+          <h5 className='text-sm text-gray-300 md:text-lg'>As a dedicated and passionate professional in the field of computer science, I have built a strong foundation in networking with a diploma from the esteemed Institute of Technologies. Additionally, my journey led me to graduate from the prestigious 1337 School of Computer Science, where I honed my skills and expanded my knowledge in the domain. </h5>
+          {/* <button className='bg-[#E3C515]  shadow shadow-white w-1/3 rounded p-2'>Learn more</button> */}
+        </div>
+
+
+        <div className='max-w-[500px] max-h-[500px] w-[300px] h-[300px] md:h-full md:w-full flex justify-center relative '>
+        <Canvas shadows>
             <Heart />
           </Canvas>
-        </div>
-        <div className='flex w-full flex-col justify-start gap-4'>
-          <h1 className='text-white text-4xl font-bold'>Feel, Think, Design</h1>
-          <h1 className='text-[#E3C515] font-semibold'>-- Who am I</h1>
-          <h5 className='text-sm text-gray-300'>Full stuff stuff I do this and that</h5>
-          <button className='bg-[#E3C515] shadow shadow-white w-1/3 rounded p-2'>Learn more</button>
+          {/* <Image className="w-1/2 ok m-auto absolute top-0 bottom-0 left-0 right-0   max-w-[400px]  min-w-[300px]" src="/pro.png" alt="My Image" width={500} height={300}
+          /> */}
         </div>
       </div>
+
+ 
     </div>
   );
 };

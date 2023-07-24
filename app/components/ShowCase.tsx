@@ -374,7 +374,7 @@ export const ShowCase = ({ camRotate }: Props) => {
           />
         }
 
-        <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={0.2} roughness={0.8} bumpScale={0.0005} color="white" />
+        <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={1} roughness={0.8} bumpScale={0.0005} color="white" />
       </mesh>
     )
   })
@@ -426,13 +426,13 @@ roughness: 0.8,
       </mesh>
 
       {/* showcase frames */}
-      {/* <group>
+      <group>
         {meshProjects.map((mesh, index) => (
           <React.Fragment key={index}>
             {mesh}
           </React.Fragment>
         ))}
-      </group> */}
+      </group>
 
 
       {/* Ring rotation={[Math.PI / 2, 0, 0]}  */}

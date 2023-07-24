@@ -15,13 +15,13 @@ export default function Home() {
 
           < Intro />
           <Whoami />
-          <Works />
-          <Apportonity />
+           <Works />
+         {/* <Apportonity /> */}
         </div>
-        <div className="ml-auto pl-5">
+        {/* <div className="ml-auto pl-5">
           <Contactme />
 
-        </div>
+        </div> */}
 
 </div>
 
