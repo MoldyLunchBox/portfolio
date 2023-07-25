@@ -36,7 +36,7 @@ export const Contactme = () => {
             <h1 className="text-white"> Contact me</h1>
             <input placeholder="Title" name="title" className="bg-[#e8e8e6] p-2 rounded-[2px]" type="text" />
             <input placeholder="Your email" name="email" className="bg-[#e8e8e6] p-2 rounded-[2px]" type="email" />
-            <textarea placeholder="Type your message" name="message" className="bg-[#e8e8e6] rounded-[2px] p-4" cols="30" rows="10"></textarea>
+            <textarea placeholder="Type your message" name="message" className="bg-[#e8e8e6] rounded-[2px] p-4" cols={30} rows={10}></textarea>
             <button onClick={handleSubmit} className="bg-[yellow]"> Send</button>
             {success ? "Message sent succesfully" : null}
           <div id="poop" className="flex  left-1 -bottom-10 -top-5 translate-y-full  text-center absolute justify-center">
