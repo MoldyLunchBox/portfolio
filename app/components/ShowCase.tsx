@@ -4,122 +4,31 @@ import { Environment, OrbitControls, PerspectiveCamera, useTexture } from '@reac
 import { Mesh, Shape, BackSide, DoubleSide, ExtrudeGeometry, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+import {  FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import * as THREE from 'three';
 import JSONfont from "../Rubik.json";
 import { userAgent } from 'next/server';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { useLoader } from '@react-three/fiber'
 import { MyModel } from './MyModel';
-const clock = new THREE.Clock()
 
 interface Props {
   camRotate: number
 }
 export const ShowCase = ({ camRotate }: Props) => {
   const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
-  const orbitControlsRef = useRef(null)
-  const cameraLight = useRef(null)
-  const centerShape = useRef(null)
+  const orbitControlsRef = useRef<any>(null)
+  const cameraLight = useRef<any>(null)
+  const centerShape = useRef<any>(null)
   useFrame((state) => {
     if (orbitControlsRef.current) {
       const { x, y } = state.mouse
       orbitControlsRef.current.setAzimuthalAngle(-x * angleToradians(90))
-      // orbitControlsRef.current.setPolarAngle(-y + 0.9 * angleToradians(90 - 30))
-
       orbitControlsRef.current.update()
     }
   })
-
-  // const Myself = () => {
-  //     const loader = new FontLoader();
-  //     const geoRef = useRef(null);
-
-  //     useEffect(() => {
-  //       loader.load('./Rubik.json', function (font: Font) {
-  //         const geometry = new TextGeometry('MYA', {
-  //           font: font,
-  //           size: 80,
-  //           height: 5,
-  //           curveSegments: 12,
-  //           bevelEnabled: true,
-  //           bevelThickness: 10,
-  //           bevelSize: 8,
-  //           bevelOffset: 0,
-  //           bevelSegments: 5,
-  //         });
-  //         geoRef.current.geometry = geometry;
-  //       });
-  //     }, []);
-
-  //     return <primitive object={geoRef.current} />;
-  //   };
-  const HeartGeometry = () => {
-    const heartShape = new Shape();
-    const x = 0, y = 0;
-
-    heartShape.moveTo(x + 5, y + 5);
-    heartShape.bezierCurveTo(x + 5, y + 5, x + 4, y, x, y);
-    heartShape.bezierCurveTo(x - 6, y, x - 6, y + 7, x - 6, y + 7);
-    heartShape.bezierCurveTo(x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19);
-    heartShape.bezierCurveTo(x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7);
-    heartShape.bezierCurveTo(x + 16, y + 7, x + 16, y, x + 10, y);
-    heartShape.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
-    const extrudeSettings = {
-      depth: 10, // Adjust the thickness here
-      bevelEnabled: false,
-    };
-    const heartGeometry = new ExtrudeGeometry(heartShape, extrudeSettings);
-
-    return (
-      <primitive object={heartGeometry} />
-    );
-  };
-  // const TextGeometry = () => {
-  //     const loader = new FontLoader();
-
-  //     const textRef = useRef(null);
-
-  //     useEffect(() => {
-  //       loader.load('./Rubik.json', function (font: Font) {
-  //         const geometry = new TextGeometry('MYA', {
-  //           font: font,
-  //           size: 80,
-  //           height: 5,
-  //           curveSegments: 12,
-  //           bevelEnabled: true,
-  //           bevelThickness: 10,
-  //           bevelSize: 8,
-  //           bevelOffset: 0,
-  //           bevelSegments: 5,
-  //         });
-
-  //         if (textRef.current) {
-  //           textRef.current.geometry = geometry;
-  //         }
-  //       });
-  //     }, []);
-
-  //     return textRef.current ? <primitive object={textRef.current} /> : null;
-  //   };
-  const textGeo = () => {
-    const loader = new FontLoader();
-    loader.load('Rubik.json', function (font: Font) {
-      const geometry = new TextGeometry('Hello three.js!', {
-        font: font,
-        size: 80,
-        height: 5,
-        curveSegments: 12,
-        bevelEnabled: true,
-        bevelThickness: 10,
-        bevelSize: 8,
-        bevelOffset: 0,
-        bevelSegments: 5
-      });
-    });
-
-  }
+ 
+ 
   const font = new FontLoader().parse(JSONfont);
   // configure font mesh
   const textOptions = {
@@ -128,7 +37,7 @@ export const ShowCase = ({ camRotate }: Props) => {
     height: 1
   };
 
-  const ballRef = useRef(null)
+  const ballRef = useRef<any>(null)
   useEffect(() => {
     if (ballRef.current) {
       const timeline = gsap.timeline({ repeat: -1, yoyo: true });
@@ -150,94 +59,15 @@ export const ShowCase = ({ camRotate }: Props) => {
     }
   }, [ballRef.current]);
 
+ 
 
-  const ThreeDTextComponents = () => {
-    const meshRef = useRef(null);
-
-    useEffect(() => {
-      const fontLoader = new FontLoader();
-      fontLoader.load(
-        'https://cdn.jsdelivr.net/npm/three/examples/fonts/helvetiker_regular.typeface.json',
-        (font) => {
-          const textGeometry = new TextGeometry('MYA', {
-            font: font,
-            size: 1,
-            height: 0.2,
-            curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0.03,
-            bevelSize: 0.02,
-            bevelSegments: 5,
-          });
-
-          const textMaterial = new THREE.MeshStandardMaterial({
-            color: 'white',
-            metalness: 0.2,
-            roughness: 0.3,
-            side: DoubleSide,
-          });
-
-          const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-          if (meshRef.current) {
-            meshRef.current.add(textMesh);
-          }
-        }
-      );
-    }, []);
-
-    return <mesh ref={meshRef} position={[-1, 0, -1]} castShadow />;
-  };
-
-  const ThreeDTextComponent = () => {
-    const meshRef = useRef(null);
-
-    useEffect(() => {
-      const fontLoader = new FontLoader();
-      fontLoader.load('Rubik.json', function (font) {
-        const textGeometry = new TextGeometry('MYA', {
-          font: font,
-          size: 1,
-          height: 0.2,
-          curveSegments: 12,
-          bevelEnabled: true,
-          bevelThickness: 0.03,
-          bevelSize: 0.02,
-          bevelSegments: 5,
-        });
-
-        const textMaterial = new THREE.MeshStandardMaterial({
-          color: 'white',
-          metalness: 0.2,
-          roughness: 0.3,
-        });
-
-        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-        textMesh.castShadow = true; // Enable casting shadow from the text
-
-        if (meshRef.current) {
-          meshRef.current.add(textMesh);
-        }
-      });
-    }, []);
-
-    return <mesh ref={meshRef} position={[-1, 0, -1]} castShadow />;
-  };
-  const [camLookAt, setCamLookAt] = useState(new THREE.Vector3(-20, 1, 0))
-  const lookAtTarget = new THREE.Vector3(60, 10, 0);
-  const balltarget = new THREE.Vector3(0, 0, -0);
-  const balltarget2 = new THREE.Vector3(0, 0, -10);
-
-  const ballRef2 = useRef(undefined)
+  
   useEffect(() => {
     isClick = true
 
   }, [camRotate])
-  const spotlight = useMemo(() => new THREE.SpotLight('#fff'), []);
-  const spotlight2 = useMemo(() => new THREE.SpotLight('#fff'), []);
-  const sunSpotLight = useMemo(() => new THREE.SpotLight('#fff'), []);
-
-  const { gl, camera } = useThree();
+ 
+  const {  camera } = useThree();
   let isClick = false;
   let oldPos = {
     x: camera.position.x,
@@ -332,7 +162,7 @@ export const ShowCase = ({ camRotate }: Props) => {
     const action = mixer.clipAction( object.animations[ 0 ] );
     action.play();
 
-    object.traverse( function ( child ) {
+    object.traverse( function ( child: any ) {
 
       if ( child.isMesh ) {
 

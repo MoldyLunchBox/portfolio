@@ -4,9 +4,9 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import * as THREE from 'three'; // Import the entire THREE library
 
 export const MyModel = () => {
-  const group = useRef();
-  const animationAction = useRef();
-  const animationMixer = useRef();
+  const group = useRef<any>();
+  const animationAction = useRef<any>();
+  const animationMixer = useRef<any>();
   const [isWalking, setIsWalking] = useState(true);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export const MyModel = () => {
 
       // Play the first animation clip
       const action = mixer.clipAction(fbxModel.animations[0]);
-      action.setLoop(THREE.LoopRepeat); // Set animation to repeat
+      action.setLoop(THREE.LoopRepeat, Infinity); // Set animation to repeat
       // action.clampWhenFinished = true; // Ensure animation doesn't blend into the next one
       action.play();
 

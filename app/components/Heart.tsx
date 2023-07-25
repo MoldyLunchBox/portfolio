@@ -12,7 +12,7 @@ import JSONfont from "../Rubik.json";
 
 export const Heart = () => {
   const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
-  const orbitControlsRef = useRef<OrbitControlsChangeEvent>(null)
+  const orbitControlsRef = useRef<any>(null)
   const lightRef = useRef<THREE.SpotLight>(null)
 
   let angle = 0;
@@ -179,7 +179,7 @@ export const Heart = () => {
 
 
   const ThreeDTextComponents = () => {
-    const meshRef = useRef(null);
+    const meshRef = useRef<Mesh>(null);
 
     useEffect(() => {
       const fontLoader = new FontLoader();
@@ -217,7 +217,7 @@ export const Heart = () => {
   };
 
   const ThreeDTextComponent = () => {
-    const meshRef = useRef(null);
+    const meshRef = useRef<Mesh>(null);
 
     useEffect(() => {
       const fontLoader = new FontLoader();
