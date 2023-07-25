@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Environment, OrbitControls, OrbitControlsChangeEvent, PerspectiveCamera } from '@react-three/drei'
 import { Mesh, Shape, BackSide, DoubleSide, ExtrudeGeometry, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import * as THREE from 'three';
 import JSONfont from "../Rubik.json";
@@ -12,9 +12,8 @@ import JSONfont from "../Rubik.json";
 
 export const Heart = () => {
   const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
-  const orbitControlsRef = useRef(null)
-  const lightRef = useRef(null)
-  const lightBall = useRef(null)
+  const orbitControlsRef = useRef<OrbitControlsChangeEvent>(null)
+  const lightRef = useRef<THREE.SpotLight>(null)
 
   let angle = 0;
   let lightRadius = 8
@@ -28,6 +27,8 @@ export const Heart = () => {
 
       // const y = angle
       orbitControlsRef.current.setAzimuthalAngle(-camerAngle / 100 * angleToradians(90))
+      // const azimuthalAngle = -camerAngle / 100 * angleToradians(90);
+      // orbitControlsRef.current.position.setFromSphericalCoords(10, azimuthalAngle, 0); // Change the azimuthal angle
       // orbitControlsRef.current.setPolarAngle(-y + 0.9 * angleToradians(90 - 30))
       // orbitControlsRef.current.position.
       // orbitControlsRef.current.update()
@@ -154,7 +155,7 @@ export const Heart = () => {
     height: 1
   };
 
-  const ballRef = useRef(null)
+  const ballRef = useRef<THREE.Mesh>(null)
   // useEffect(() => {
   //   if (ballRef.current) {
   //     const timeline = gsap.timeline({ repeat: -1, yoyo: true });
