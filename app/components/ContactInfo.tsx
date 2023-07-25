@@ -1,5 +1,4 @@
 import React from 'react'
-import {  GitHubIcon } from '@heroicons/react/outline';
 export const ContactInfo = () => {
   return (
     <>
