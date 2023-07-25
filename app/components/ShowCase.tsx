@@ -4,7 +4,7 @@ import { Environment, OrbitControls, PerspectiveCamera, useTexture } from '@reac
 import { Mesh, Shape, BackSide, DoubleSide, ExtrudeGeometry, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
-import {  FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import * as THREE from 'three';
 import JSONfont from "../Rubik.json";
 import { userAgent } from 'next/server';
@@ -27,8 +27,8 @@ export const ShowCase = ({ camRotate }: Props) => {
       orbitControlsRef.current.update()
     }
   })
- 
- 
+
+
   const font = new FontLoader().parse(JSONfont);
   // configure font mesh
   const textOptions = {
@@ -59,15 +59,15 @@ export const ShowCase = ({ camRotate }: Props) => {
     }
   }, [ballRef.current]);
 
- 
 
-  
+
+
   useEffect(() => {
     isClick = true
 
   }, [camRotate])
- 
-  const {  camera } = useThree();
+
+  const { camera } = useThree();
   let isClick = false;
   let oldPos = {
     x: camera.position.x,
@@ -89,15 +89,15 @@ export const ShowCase = ({ camRotate }: Props) => {
         2,
         radius * Math.cos(angleInRadians)
       );
- if (cameraLight.current)
-      gsap.to(cameraLight.current.position, {
-        x: target.x,
-        y: target.y + 5,
-        z: target.z,
-        duration: 0.2,
-        ease: "power2.inOut" // Use a curved easing function for a smoother animation
-      });
-     
+      if (cameraLight.current)
+        gsap.to(cameraLight.current.position, {
+          x: target.x,
+          y: target.y + 5,
+          z: target.z,
+          duration: 0.2,
+          ease: "power2.inOut" // Use a curved easing function for a smoother animation
+        });
+
       gsap.to(camera.position, {
         x: target.x,
         y: target.y,
@@ -109,13 +109,13 @@ export const ShowCase = ({ camRotate }: Props) => {
 
     if (!isClick) {
       if (cameraLight.current)
-      gsap.to(cameraLight.current.position, {
-        x: oldPos.x,
-        y: oldPos.y + 5,
-        z: oldPos.z,
-        duration: 0.5,
-        ease: "power2.inOut" // Use a curved easing function for a smoother animation
-      });
+        gsap.to(cameraLight.current.position, {
+          x: oldPos.x,
+          y: oldPos.y + 5,
+          z: oldPos.z,
+          duration: 0.5,
+          ease: "power2.inOut" // Use a curved easing function for a smoother animation
+        });
 
       gsap.to(camera.position, {
         x: oldPos.x,
@@ -129,7 +129,6 @@ export const ShowCase = ({ camRotate }: Props) => {
 
 
   // project showcase info
-  const texture = useTexture('./img/gomoku.jpg');
   const angle = 90
   const radius = 30
   const projects = [
@@ -144,85 +143,75 @@ export const ShowCase = ({ camRotate }: Props) => {
       light: useMemo(() => new THREE.SpotLight('#fff'), [])
     },
     {
-      name: "gomoku",
-      screenshot: useTexture('./img/gomoku.jpg'),
+      name: "pingpong",
+      screenshot: useTexture('./img/pingpong.jpg'),
       light: useMemo(() => new THREE.SpotLight('#fff'), [])
     },
     {
       name: "gomoku",
-      screenshot: useTexture('./img/gomoku.jpg'),
+      screenshot: useTexture('./img/npuzzle.jpg'),
       light: useMemo(() => new THREE.SpotLight('#fff'), [])
     }
   ]
   const loader = new FBXLoader();
-  loader.load( 'models/fbx/Samba Dancing.fbx', function ( object ) {
+  loader.load('models/fbx/Samba Dancing.fbx', function (object) {
 
-    const mixer = new THREE.AnimationMixer( object );
+    const mixer = new THREE.AnimationMixer(object);
 
-    const action = mixer.clipAction( object.animations[ 0 ] );
+    const action = mixer.clipAction(object.animations[0]);
     action.play();
 
-    object.traverse( function ( child: any ) {
+    object.traverse(function (child: any) {
 
-      if ( child.isMesh ) {
+      if (child.isMesh) {
 
         child.castShadow = true;
         child.receiveShadow = true;
 
       }
 
-    } );
+    });
 
 
-  } );
-  
+  });
+
   const fbx = useLoader(FBXLoader, './models/walk.fbx')
   const meshProjects = projects.map((project, index) => {
-    if (project.name){
-    return (
-      
-      <mesh key={index} rotation={[0, angleToradians(angle) * index, 0]} 
-      position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index))]} 
-      
-      castShadow>
+    if (project.name) {
+      return (
 
-        <boxGeometry args={[10, 10, 0.2]} />
-        <meshBasicMaterial attach="material-0" color="#000000" />
-        <meshBasicMaterial attach="material-1" color="#000000" />
-        <meshBasicMaterial attach="material-5" color="#000000" />
+        <mesh key={index} rotation={[0, angleToradians(angle) * index, 0]}
+          position={[radius * Math.sin(angleToradians(angle) * index), 4.6, radius * Math.cos(angleToradians(angle * index))]}
 
-        <primitive
-          castShadow penumbra={0.3} 
-          intensity={30}
-          distance={40}
-          angle={0.25}
-          color={"white"}
-          // args={["white", 20, 12, 0.5]}
-          // distance angle penumbra decay focus position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)) < 0 ? radius * Math.cos(angleToradians(angle * index)) - 10 : radius * Math.cos(angleToradians(angle * index)) + 10]}
-          position={[0,5,36]}
-          // position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)) < 0 ? (radius * Math.cos(angleToradians(angle * index))) - 2 : (radius * Math.cos(angleToradians(angle * index))) + 2]}
-          object={project.light}
-          
+          castShadow>
+
+          <boxGeometry args={[10, 10, 0.2]} />
+          <meshBasicMaterial attach="material-0" color="#000000" />
+          <meshBasicMaterial attach="material-1" color="#000000" />
+          <meshBasicMaterial attach="material-5" color="#000000" />
+
+          <primitive
+            castShadow penumbra={0.3}
+            intensity={30}
+            distance={40}
+            angle={0.25}
+            color={"white"}
+            position={[0, 5, 36]}
+            object={project.light}
+
           />
-        {
-          <primitive object={project.light.target} 
-          // position={new THREE.Vector3(radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)))}
-          // position={new THREE.Vector3(radius * Math.sin(angleToradians(angle) * index), 0, radius * Math.cos(angleToradians(angle * index)) )}
-          />
-        }
+          {
+            <primitive object={project.light.target}
+            />
+          }
 
-        <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={1} roughness={0.8} bumpScale={0.0005} color="white" />
-      </mesh>
-    )
-  }
+          <meshStandardMaterial side={DoubleSide} attach="material-4" map={project.screenshot} metalness={1} roughness={0.8} bumpScale={0.0005} color="white" />
+        </mesh>
+      )
+    }
   })
 
-  // // Calculate the target positions for each spotlight
-  // const spotlightTargets = meshProjects.map((mesh) => {
-  //   const targetPosition = mesh.props.position.slice();
-  //   targetPosition[2] += 10; // Add +10 to the z position
-  //   return targetPosition;
-  // });
+
   console.log(meshProjects)
   const colors = ['#00FF00', '#FF0000', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
 
@@ -232,35 +221,19 @@ export const ShowCase = ({ camRotate }: Props) => {
 
 
       <PerspectiveCamera makeDefault position={[0, 2, 50]} />
-      <OrbitControls />
-      {/* ball 1 */}
-      {/* <mesh ref={ballRef} position={[0, 0, -50]} castShadow >
-        <sphereGeometry args={[0.3, 32, 32]} />
-        <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
-      </mesh> */}
+      <OrbitControls  enableZoom={false} />
 
-      {/* ball 2 */}
-      {/* <mesh ref={ballRef2} position={[0, 3, 0]} castShadow >
-        <sphereGeometry args={[0.3, 32, 32]} />
-roughness: 0.8,
-					color: 0xffffff,
-					metalness: 0.2,
-					bumpScale: 0.0005
-
-        <meshStandardMaterial side={DoubleSide} metalness={0.2} roughness={0.3} color="yellow" />
-      </mesh> */}
-<MyModel />
- {/* <primitive object={fbx} /> */}
+      <MyModel />
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />
-        <meshStandardMaterial map={ useTexture('./img/road.jpg')} metalness={1} side={DoubleSide} roughness={0.5} color="white" />
+        <meshStandardMaterial map={useTexture('./img/road.jpg')} metalness={1} side={DoubleSide} roughness={0.5} color="white" />
       </mesh>
 
 
-      <mesh rotation={[-angleToradians(90), 0, 0]} position={[0,1,0]} receiveShadow>
+      <mesh rotation={[-angleToradians(90), 0, 0]} position={[0, 1, 0]} receiveShadow>
         <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial map={ useTexture('./img/road2.jpg')} metalness={1} side={DoubleSide} roughness={0.5} color="white" />
+        <meshStandardMaterial map={useTexture('./img/road2.jpg')} metalness={1} side={DoubleSide} roughness={0.5} color="white" />
       </mesh>
 
       {/* showcase frames */}
@@ -272,64 +245,17 @@ roughness: 0.8,
         ))}
       </group>
 
-
-      {/* Ring rotation={[Math.PI / 2, 0, 0]}  */}
       <mesh ref={centerShape} receiveShadow castShadow position={[0, 10, 0]}>
-        {/* <ringGeometry args={[35, 34, 32]} /> */}
         <torusKnotGeometry args={[4, 1.2, 100, 35]} />
-        {/* <torusGeometry args={[3, 0.5, 20, 2999]} /> */}
-        {/* < cylinderGeometry args={[6, 6, 1.5, 64, 1, false]} /> */}
         <meshStandardMaterial metalness={1} roughness={1} color="blue" />
 
       </mesh>
       <ambientLight intensity={0.1} />
-      {/* directinal light */}
-      {/* <directionalLight args={["white", 1]} position={[-40,20,10]} /> */}
-
-
-      {/* <primitive
-        object={spotlight2}
-        intensity={0.5}
-        penumbra={1}
-        castShadow
-        position={[0, 20, -10]}
-      />
-      {
-
-
-        <primitive object={spotlight2.target} position={balltarget} />
-      } */}
-
-      {/* <primitive
-        object={spotlight}
-        intensity={1.5}
-        penumbra={0.2}
-        castShadow
-        position={[0, 10, -10]}
-      />
-      {
-
-
-        <primitive object={spotlight.target} position={balltarget2} />
-      } */}
 
 
 
       <spotLight shadow-mapSize-width={1024}
         shadow-mapSize-height={1024} castShadow penumbra={0.3} args={["white", 60, 95, 10, 10, 3]} position={[0, 80, 0]} />
-      {/* <spotLight ref={cameraLight} castShadow penumbra={0.3} args={["white", 0, 0, 0]} position={[0, 8, 32]} /> */}
-
-      {/* <spotLight  castShadow penumbra={0.3} args={["white", 20, 12, 1]} position={[0, 8, 40]} /> */}
-
-      {/* environement */}
-      {/* <Environment background>
-            <mesh>
-
-            <sphereGeometry args={[50,100,100]}/>
-            <meshBasicMaterial side={BackSide} color="green"/>
-            </mesh>
-        </Environment> */}
-
 
     </>
   )

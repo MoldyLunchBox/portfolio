@@ -12,7 +12,6 @@ import SplitType from 'split-type';
 export const Whoami = () => {
   const [heart, setHeart] = useState({ shape: new ShapeGeometry(), material: new MeshBasicMaterial() })
 
-
   // useEffect(()=>{
   //   const x = 0, y = 0;
 

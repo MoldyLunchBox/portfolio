@@ -30,6 +30,7 @@ export const Intro = () => {
     // Cleanup function to stop the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
+
   return (
     <div className='  flex  flex-col   items-center snap-center h-[100vh]'>
       <Navbar />
@@ -43,10 +44,10 @@ export const Intro = () => {
         </div>
 
 
-        <div className='max-w-[500px] max-h-[500px] w-[300px] h-[300px] md:h-full md:w-full flex justify-center relative '>
-          <Canvas  >
+        <div  className='max-w-[500px] max-h-[500px] w-[300px] h-[300px] md:h-full md:w-full flex justify-center relative '>
+          <Canvas >
             <PerspectiveCamera makeDefault position={[0, 3, 5]} />
-            <OrbitControls />
+            <OrbitControls  enableZoom={false}/>
             <mesh>
               <Sphere args={[2, 32, 32]} >
 

@@ -259,7 +259,7 @@ export const Heart = () => {
 
 
       <PerspectiveCamera makeDefault position={[0, 3, 8]} />
-      <OrbitControls  ref={orbitControlsRef} maxPolarAngle={angleToradians(80)} minPolarAngle={angleToradians(60)} />
+      <OrbitControls  enableZoom={false} ref={orbitControlsRef} maxPolarAngle={angleToradians(80)} minPolarAngle={angleToradians(60)} />
       <ThreeDTextComponent />
       <mesh ref={ballRef} position={[-1.2, 0, -0.9]} castShadow >
         <sphereGeometry args={[0.3, 32, 32]} />

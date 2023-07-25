@@ -10,8 +10,8 @@ export const Works = () => {
   const projects = [
     {name : 'Choose' },
     {name : "Gomoku" },
-   { name : 'N_puzzle' },
     {name : 'PingPong' },
+   { name : 'N_puzzle' },
 
   ];
   const handleClick = (direction : string) =>{
@@ -69,10 +69,13 @@ export const Works = () => {
 
   const [camRotate, setCamRotate] = useState(0)
   const defaultAngle = 90
+  const handleWheel = (event: any) => {
+    event.preventDefault();
+  };
   return (
-    <div className='flex items-center snap-center h-[100vh]'>
+    <div onWheel={handleWheel}  className='flex items-center snap-center h-[100vh]'>
       <div className='flex flex-wrap items-center h-full w-full'>
-          <div className=' flex w-full h-full max-h-[80vh] justify-center  relative'>
+          <div  className=' flex w-full h-full max-h-[80vh] justify-center  relative'>
             <Canvas shadows>
               <ShowCase camRotate={camRotate} />
             </Canvas>
