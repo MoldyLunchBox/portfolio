@@ -304,6 +304,11 @@ export const ShowCase = ({ camRotate }: Props) => {
   const radius = 30
   const projects = [
     {
+      name: null,
+      screenshot: useTexture('./img/gomoku.jpg'),
+      light: useMemo(() => new THREE.SpotLight('#fff'), [])
+    },
+    {
       name: "gomoku",
       screenshot: useTexture('./img/gomoku.jpg'),
       light: useMemo(() => new THREE.SpotLight('#fff'), [])
@@ -343,7 +348,9 @@ export const ShowCase = ({ camRotate }: Props) => {
   
   const fbx = useLoader(FBXLoader, './models/walk.fbx')
   const meshProjects = projects.map((project, index) => {
+    if (project.name){
     return (
+      
       <mesh key={index} rotation={[0, angleToradians(angle) * index, 0]} 
       position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index))]} 
       
@@ -362,11 +369,11 @@ export const ShowCase = ({ camRotate }: Props) => {
           color={"white"}
           // args={["white", 20, 12, 0.5]}
           // distance angle penumbra decay focus position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)) < 0 ? radius * Math.cos(angleToradians(angle * index)) - 10 : radius * Math.cos(angleToradians(angle * index)) + 10]}
-         position={[0,5,36]}
-        // position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)) < 0 ? (radius * Math.cos(angleToradians(angle * index))) - 2 : (radius * Math.cos(angleToradians(angle * index))) + 2]}
-           object={project.light}
-
-        />
+          position={[0,5,36]}
+          // position={[radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)) < 0 ? (radius * Math.cos(angleToradians(angle * index))) - 2 : (radius * Math.cos(angleToradians(angle * index))) + 2]}
+          object={project.light}
+          
+          />
         {
           <primitive object={project.light.target} 
           // position={new THREE.Vector3(radius * Math.sin(angleToradians(angle) * index), 4, radius * Math.cos(angleToradians(angle * index)))}
@@ -377,6 +384,7 @@ export const ShowCase = ({ camRotate }: Props) => {
         <meshStandardMaterial side={DoubleSide} attach="material-4" map={texture} metalness={1} roughness={0.8} bumpScale={0.0005} color="white" />
       </mesh>
     )
+  }
   })
 
   // // Calculate the target positions for each spotlight

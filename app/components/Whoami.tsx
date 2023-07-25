@@ -7,6 +7,7 @@ import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 
 import { Mesh, Shape, DoubleSide, ShapeGeometry, MeshBasicMaterial, Scene, BoxGeometry, WebGLRenderer } from 'three';
 import { Heart } from './Heart';
+import SplitType from 'split-type';
 
 export const Whoami = () => {
   const [heart, setHeart] = useState({ shape: new ShapeGeometry(), material: new MeshBasicMaterial() })
@@ -49,13 +50,14 @@ export const Whoami = () => {
   // scene.add( mesh );
   // setHeart({shape: geometry, material: material})
   // })
+ 
   return (
     <div className='flex items-center snap-center h-[100vh]'>
 
 
 <div className='flex flex-col md:flex-row justify-center items-center h-full w-full'>
         <div className='flex w-full flex-col min-w-[280px] max-w-[500px] justify-center text-center md:text-left gap-4 '>
-          <h1 className='text-white text-4xl bold font-semibold'>Boundary-Pushing Techie</h1>
+          <h1 className='text-white text-4xl bold font-semibold' id="title2" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }} >Boundary-Pushing Techie</h1>
           <h1 className='text-[#E3C515] md:text-xl font-semibold'> -- professional history</h1>
           <h5 className='text-sm text-gray-300 md:text-lg'>As a dedicated and passionate professional in the field of computer science, I have built a strong foundation in networking with a diploma from the esteemed Institute of Technologies. Additionally, my journey led me to graduate from the prestigious 1337 School of Computer Science, where I honed my skills and expanded my knowledge in the domain. </h5>
           {/* <button className='bg-[#E3C515]  shadow shadow-white w-1/3 rounded p-2'>Learn more</button> */}

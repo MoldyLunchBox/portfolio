@@ -18,10 +18,10 @@ export default function Home() {
            <Works />
          {/* <Apportonity /> */}
         </div>
-        {/* <div className="ml-auto pl-5">
+        <div className="">
           <Contactme />
 
-        </div> */}
+        </div>
 
 </div>
 
