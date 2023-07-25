@@ -8,22 +8,22 @@ import { ShowCase } from './ShowCase';
 export const Works = () => {
   const [project, setProject] = useState(0)
   const projects = [
-    {name : 'Choose' },
-    {name : "Gomoku" },
-    {name : 'PingPong' },
-   { name : 'N_puzzle' },
+    { name: 'Choose', link: null },
+    { name: "Gomoku", link: "https://gomoku-reactjs.vercel.app/" },
+    { name: 'PingPong', link: "https://ping-pong-matter-js.vercel.app/" },
+    { name: 'N_puzzle', link: "https://n-puzzle-nm9kfedmc-moldylunchbox.vercel.app/" },
 
   ];
-  const handleClick = (direction : string) =>{
+  const handleClick = (direction: string) => {
     if (project + 1 >= (projects).length)
-    setProject(0)
-    if (direction == "left"){
-      setCamRotate(defaultAngle * (project == 0 ? (projects).length - 1 :  project - 1 ))
-      setProject(project == 0 ? (projects).length - 1 :  project - 1)
+      setProject(0)
+    if (direction == "left") {
+      setCamRotate(defaultAngle * (project == 0 ? (projects).length - 1 : project - 1))
+      setProject(project == 0 ? (projects).length - 1 : project - 1)
     }
-    else  if (direction == "right"){
-      setProject(project  >= (projects).length - 1 ? 0 :  project + 1)
-      setCamRotate(defaultAngle * (project  >= (projects).length - 1 ? 0 :  project + 1 ))
+    else if (direction == "right") {
+      setProject(project >= (projects).length - 1 ? 0 : project + 1)
+      setCamRotate(defaultAngle * (project >= (projects).length - 1 ? 0 : project + 1))
     }
   }
   // const handleClick = (direction: string) => {
@@ -75,20 +75,30 @@ export const Works = () => {
     event.preventDefault();
   };
   return (
-    <div onWheel={handleWheel}  className='flex items-center snap-center h-[100vh]'>
+    <div onWheel={handleWheel} className='flex items-center snap-center h-[100vh]'>
       <div className='flex flex-wrap items-center h-full w-full'>
-          <div  className=' flex w-full h-full max-h-[80vh] justify-center  relative'>
-            <Canvas ref={canvasRef} shadows>
-              <ShowCase canvasRef={canvasRef} camRotate={camRotate} />
-            </Canvas>
-            <div id="poop" className='w-[300px]  items-center flex  absolute justify-center max-h-[30vh] '>
-              <ChevronLeft onClick={() => handleClick('left')} className='text-white  w-10 cursor-pointer hover:text-[#E3C515] text-center  left-0 h-10 top-0  bottom-0  ' />
-              <div className="tooltip tooltip-open" data-tip="click to visit">
-            <div className='flex flex-auto cursor-pointer hover:animate-pulse text-white justify-center md:text-lg lg:text-xl xl:text-2xl flex-row no-scrollbar overflow-x-scroll'> {projects[project].name}</div>
-             </div>
-              <ChevronRight onClick={() => handleClick('right')} className='text-white cursor-pointer hover:text-[#E3C515]  w-10   h-10  right-0' />
+        <div className=' flex w-full h-full max-h-[80vh] justify-center  relative'>
+          <Canvas ref={canvasRef} shadows>
+            <ShowCase canvasRef={canvasRef} camRotate={camRotate} />
+          </Canvas>
+          <div id="poop" className='w-[300px]  items-center flex  absolute justify-center max-h-[30vh] '>
+            <ChevronLeft onClick={() => handleClick('left')} className='text-white  w-10 cursor-pointer hover:text-[#E3C515] text-center  left-0 h-10 top-0  bottom-0  ' />
+            <div className="tooltip tooltip-open" data-tip="click to visit">
+              {
+                projects[project].link ?
+                  <a href={`${projects[project].link}`} className='flex flex-auto cursor-pointer hover:animate-pulse text-white justify-center md:text-lg lg:text-xl xl:text-2xl flex-row no-scrollbar overflow-x-scroll'>
+                    {projects[project].name}
+                  </a>
+                  :
+                  <a className='flex flex-auto cursor-pointer hover:animate-pulse text-white justify-center md:text-lg lg:text-xl xl:text-2xl flex-row no-scrollbar overflow-x-scroll'>
+                    {projects[project].name}
+                  </a>
+
+              }
             </div>
+            <ChevronRight onClick={() => handleClick('right')} className='text-white cursor-pointer hover:text-[#E3C515]  w-10   h-10  right-0' />
           </div>
+        </div>
 
       </div>
     </div>
