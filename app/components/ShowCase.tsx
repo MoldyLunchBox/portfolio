@@ -14,8 +14,25 @@ import { MyModel } from './MyModel';
 
 interface Props {
   camRotate: number
+  canvasRef: any
 }
-export const ShowCase = ({ camRotate }: Props) => {
+export const ShowCase = ({ canvasRef, camRotate }: Props) => {
+  const { gl } = useThree();
+
+  useEffect(() => {
+    const handleTouchMove = (e:any) => {
+      console.log("sasasasasasasas")
+      e.preventDefault();
+    };
+
+    gl.domElement.style.touchAction = 'none';
+    gl.domElement.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    return () => {
+      gl.domElement.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [gl]);
+  
   const angleToradians = (degAngle: number) => (Math.PI / 180) * degAngle
   const orbitControlsRef = useRef<any>(null)
   const cameraLight = useRef<any>(null)
@@ -175,7 +192,6 @@ export const ShowCase = ({ camRotate }: Props) => {
 
   });
 
-  const fbx = useLoader(FBXLoader, './models/walk.fbx')
   const meshProjects = projects.map((project, index) => {
     if (project.name) {
       return (
@@ -212,16 +228,14 @@ export const ShowCase = ({ camRotate }: Props) => {
   })
 
 
-  console.log(meshProjects)
-  const colors = ['#00FF00', '#FF0000', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
-
+  const controlRef = useRef<any>(null);
   return (
     <>
 
 
 
       <PerspectiveCamera makeDefault position={[0, 2, 50]} />
-      <OrbitControls  enableZoom={false} />
+      <OrbitControls ref={controlRef} domElement={canvasRef.current} enablePan={false} enableZoom={false} />
 
       <MyModel />
       {/* floor */}

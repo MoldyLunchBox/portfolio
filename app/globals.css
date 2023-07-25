@@ -18,7 +18,10 @@
     height: 400px;
   }
 }
-
+canvas {
+  touch-action: none;
+  pointer-events: none;
+}
 
 /* styles.module.css */
 @layer components {

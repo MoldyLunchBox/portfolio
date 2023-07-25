@@ -61,7 +61,6 @@ export const MyModel = () => {
         const rotationAngle = Math.atan2(x - group.current.position.x, z - group.current.position.z);
 
         // Animation loop has restarted, do something here
-        console.log('Animation loop has restarted.');
         group.current.position.x = x;
         group.current.position.z = z;
         group.current.position.y = 1;

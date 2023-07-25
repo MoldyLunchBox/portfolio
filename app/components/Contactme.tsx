@@ -16,10 +16,8 @@ export const Contactme = () => {
 
         emailjs.sendForm('service_dfbzv2d', 'template_gsuwpmr', form.current, 'LTyAnzVB5cBw9Swnl')
           .then((result) => {
-            console.log(result.text);
             setSuccess(true)
           }, (error) => {
-            console.log(error.text);
             setSuccess(false)
           });
       }
@@ -30,10 +28,10 @@ export const Contactme = () => {
   }
   return (
     <>
-      <div className='flex  items-center justify-between snap-center h-[100vh]'>
-        <div className="md:basis-1/2  basis-1 flex justify-center  md:justify-end ">
+      <div className='flex items-start md:items-center justify-between snap-center h-[100vh]'>
+        <div className="md:basis-1/2 mt-2 md:ml-5 md:mt-0 basis-1 flex justify-center  md:justify-end ">
           <form action="" ref={form} className="flex relative w-full max-w-[450px] flex-col gap-4">
-            <h1 className="text-white"> Contact me</h1>
+            <h2 className="uppercase font-semibold text-white"> Contact me</h2>
             <input placeholder="Title" name="title" className="bg-[#e8e8e6] p-2 rounded-[2px]" type="text" />
             <input placeholder="Your email" name="email" className="bg-[#e8e8e6] p-2 rounded-[2px]" type="email" />
             <textarea placeholder="Type your message" name="message" className="bg-[#e8e8e6] rounded-[2px] p-4" cols={30} rows={10}></textarea>

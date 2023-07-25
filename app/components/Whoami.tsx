@@ -67,8 +67,7 @@ export const Whoami = () => {
         <Canvas shadows>
             <Heart />
           </Canvas>
-          {/* <Image className="w-1/2 ok m-auto absolute top-0 bottom-0 left-0 right-0   max-w-[400px]  min-w-[300px]" src="/pro.png" alt="My Image" width={500} height={300}
-          /> */}
+ 
         </div>
       </div>
 

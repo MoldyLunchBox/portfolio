@@ -69,6 +69,8 @@ export const Works = () => {
 
   const [camRotate, setCamRotate] = useState(0)
   const defaultAngle = 90
+  const canvasRef = useRef<any>(null);
+
   const handleWheel = (event: any) => {
     event.preventDefault();
   };
@@ -76,8 +78,8 @@ export const Works = () => {
     <div onWheel={handleWheel}  className='flex items-center snap-center h-[100vh]'>
       <div className='flex flex-wrap items-center h-full w-full'>
           <div  className=' flex w-full h-full max-h-[80vh] justify-center  relative'>
-            <Canvas shadows>
-              <ShowCase camRotate={camRotate} />
+            <Canvas ref={canvasRef} shadows>
+              <ShowCase canvasRef={canvasRef} camRotate={camRotate} />
             </Canvas>
             <div id="poop" className='w-[300px]  items-center flex  absolute justify-center max-h-[30vh] '>
               <ChevronLeft onClick={() => handleClick('left')} className='text-white  w-10 cursor-pointer hover:text-[#E3C515] text-center  left-0 h-10 top-0  bottom-0  ' />

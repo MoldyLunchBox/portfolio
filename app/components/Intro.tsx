@@ -33,8 +33,8 @@ export const Intro = () => {
 
   return (
     <div className='  flex  flex-col   items-center snap-center h-[100vh]'>
-      <Navbar />
 
+      <Navbar />
       <div className='flex flex-col md:flex-row justify-center items-center h-full w-full'>
         <div className='flex w-full flex-col min-w-[280px] max-w-[500px] justify-center text-center md:text-left gap-4 '>
           <h1 className='text-white text-4xl bold font-semibold' id="title1" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }}>Think outside the box</h1>
@@ -58,8 +58,8 @@ export const Intro = () => {
             <ambientLight intensity={0.03} />
 
           </Canvas>
-          {/* <Image className="w-1/2 ok m-auto absolute top-0 bottom-0 left-0 right-0   max-w-[400px]  min-w-[300px]" src="/pro.png" alt="My Image" width={500} height={300}
-          /> */}
+          <Image className="w-1/2 ok m-auto absolute top-0 bottom-0 left-0 right-0   max-w-[350px]  min-w-[200px]" src="/pro.png" alt="My Image" width={500} height={300}
+          />
         </div>
       </div>
     </div>

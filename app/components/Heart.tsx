@@ -48,7 +48,6 @@ export const Heart = () => {
       ballRef.current.position.z = (0.9  ) * 1.5 * Math.cos(angleInRadians);
 
       // rotate light
-      console.log("light")
       if (camerAngle == 100)
       camerAngleSign  *= -1
       else if (camerAngle == -100)
@@ -246,7 +245,6 @@ export const Heart = () => {
           meshRef.current.add(textMesh);
         }
       });
-      console.log("put text")
     }, []);
 
     return <mesh ref={meshRef} position={[-1.3, 0, 0]} castShadow />;
