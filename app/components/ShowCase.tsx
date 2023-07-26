@@ -11,6 +11,7 @@ import { userAgent } from 'next/server';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { useLoader } from '@react-three/fiber'
 import { MyModel } from './MyModel';
+import { ReactModel } from './ReactModel';
 
 interface Props {
   camRotate: number
@@ -211,9 +212,11 @@ export const ShowCase = ({ canvasRef, camRotate }: Props) => {
 
 
       <PerspectiveCamera makeDefault position={[0, 2, 50]} />
-      <OrbitControls ref={controlRef} />
+      <OrbitControls ref={controlRef} domElement={canvasRef.current} enablePan={false} enableZoom={false} />
 
       <MyModel />
+      <ReactModel />
+
       {/* floor */}
       <mesh rotation={[-angleToradians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[1000, 1000]} />

@@ -24,7 +24,7 @@ export const MyModel = () => {
       fbxModel.scale.set(0.01, 0.01, 0.01);
       // Add the fbxModel to the group, not the scene
       group.current.add(fbxModel);
-
+      
       // Assign the mixer and animation action to the group's current property
       animationMixer.current = mixer;
       animationAction.current = action;
