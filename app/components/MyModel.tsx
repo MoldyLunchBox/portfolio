@@ -28,7 +28,7 @@ export const MyModel = () => {
       // Assign the mixer and animation action to the group's current property
       animationMixer.current = mixer;
       animationAction.current = action;
-      animationAction.current.timeScale = 1
+      animationAction.current.timeScale = 3
     });
   }, []);
 

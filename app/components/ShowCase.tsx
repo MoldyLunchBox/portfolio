@@ -21,7 +21,6 @@ export const ShowCase = ({ canvasRef, camRotate }: Props) => {
 
   useEffect(() => {
     const handleTouchMove = (e:any) => {
-      console.log("sasasasasasasas")
       e.preventDefault();
     };
 
@@ -53,29 +52,6 @@ export const ShowCase = ({ canvasRef, camRotate }: Props) => {
     size: 5,
     height: 1
   };
-
-  const ballRef = useRef<any>(null)
-  useEffect(() => {
-    if (ballRef.current) {
-      const timeline = gsap.timeline({ repeat: -1, yoyo: true });
-
-      timeline.to(ballRef.current.position, {
-        y: 2,
-        duration: 1,
-        ease: "power1"
-      });
-
-      const secondTimeline = gsap.timeline({ repeat: -1, yoyo: true });
-      secondTimeline.to(ballRef.current.position, {
-        y: 0,
-        duration: 1,
-        ease: "none"
-      });
-
-      timeline.add(secondTimeline, ">"); // Add secondTimeline after the first animation
-    }
-  }, [ballRef.current]);
-
 
 
 
@@ -235,7 +211,7 @@ export const ShowCase = ({ canvasRef, camRotate }: Props) => {
 
 
       <PerspectiveCamera makeDefault position={[0, 2, 50]} />
-      <OrbitControls ref={controlRef} domElement={canvasRef.current} enablePan={false} enableZoom={false} />
+      <OrbitControls ref={controlRef} />
 
       <MyModel />
       {/* floor */}
