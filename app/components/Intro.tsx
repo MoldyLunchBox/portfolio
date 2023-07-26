@@ -32,7 +32,7 @@ export const Intro = () => {
   }, []);
 
   return (
-    <div className='  flex  flex-col   items-center snap-center h-[100vh]'>
+    <div id="home" className='  flex  flex-col   items-center snap-center h-[100vh]'>
 
       <Navbar />
       <div className='flex flex-col md:flex-row justify-center items-center h-full w-full'>

@@ -51,7 +51,7 @@ export const Whoami = () => {
   // })
  
   return (
-    <div className='flex items-center snap-center h-[100vh]'>
+    <div id="me" className='flex items-center snap-center h-[100vh]'>
 
 
 <div className='flex flex-col md:flex-row justify-center items-center h-full w-full'>

@@ -7,6 +7,7 @@ import { ShowCase } from './ShowCase';
 
 export const Works = () => {
   const [project, setProject] = useState(0)
+  const [help, setHelp] = useState(true)
   const projects = [
     { name: 'Choose', link: null },
     { name: "Gomoku", link: "https://gomoku-reactjs.vercel.app/" },
@@ -25,6 +26,8 @@ export const Works = () => {
       setProject(project >= (projects).length - 1 ? 0 : project + 1)
       setCamRotate(defaultAngle * (project >= (projects).length - 1 ? 0 : project + 1))
     }
+    if (project)
+      setHelp(false)
   }
   // const handleClick = (direction: string) => {
   //   if (worksRef.current) {
@@ -75,7 +78,7 @@ export const Works = () => {
     event.preventDefault();
   };
   return (
-    <div onWheel={handleWheel} className='flex items-center snap-center h-[100vh]'>
+    <div id="works" onWheel={handleWheel} className='flex items-center snap-center h-[100vh]'>
       <div className='flex flex-wrap items-center h-full w-full'>
         <div className=' flex w-full h-full max-h-[80vh] justify-center  relative'>
           <Canvas ref={canvasRef} shadows>
@@ -83,14 +86,14 @@ export const Works = () => {
           </Canvas>
           <div id="poop" className='w-[300px]  items-center flex  absolute justify-center max-h-[30vh] '>
             <ChevronLeft onClick={() => handleClick('left')} className='text-white  w-10 cursor-pointer hover:text-[#E3C515] text-center  left-0 h-10 top-0  bottom-0  ' />
-            <div className="tooltip tooltip-open" data-tip="click to visit">
+            <div className={`tooltip ${ help ? 'tooltip-open' : 'tooltip-close'} `} data-tip="click to visit">
               {
                 projects[project].link ?
-                  <a href={`${projects[project].link}`} className='flex flex-auto cursor-pointer hover:animate-pulse text-white justify-center md:text-lg lg:text-xl xl:text-2xl flex-row no-scrollbar overflow-x-scroll'>
+                  <a href={`${projects[project].link}`}  target="_blank" rel="noopener noreferrer" className='flex worksElements flex-auto cursor-pointer hover:animate-pulse text-white justify-center md:text-lg lg:text-xl xl:text-2xl flex-row no-scrollbar overflow-x-scroll'>
                     {projects[project].name}
                   </a>
                   :
-                  <a className='flex flex-auto cursor-pointer hover:animate-pulse text-white justify-center md:text-lg lg:text-xl xl:text-2xl flex-row no-scrollbar overflow-x-scroll'>
+                  <a className='flex flex-auto  cursor-pointer hover:animate-pulse text-white justify-center md:text-lg lg:text-xl xl:text-2xl flex-row no-scrollbar overflow-x-scroll'>
                     {projects[project].name}
                   </a>
 
