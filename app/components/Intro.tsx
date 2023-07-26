@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Navbar } from './Navbar'
 import Image from 'next/image';
 import { Canvas, useFrame } from '@react-three/fiber'
@@ -9,6 +9,9 @@ import SplitType from 'split-type';
 import { gsap } from 'gsap';
 
 export const Intro = () => {
+  const canvasRef = useRef<any>(null)
+  const controlRef = useRef<any>(null);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       // This code will run every 2 seconds
@@ -45,9 +48,9 @@ export const Intro = () => {
 
 
         <div  className='max-w-[500px] max-h-[500px] w-[300px] h-[300px] md:h-full md:w-full flex justify-center relative '>
-          <Canvas >
-            <PerspectiveCamera makeDefault position={[0, 3, 5]} />
-            <OrbitControls  enableZoom={false}/>
+          <Canvas ref={canvasRef}>
+            <PerspectiveCamera  makeDefault position={[0, 3, 5]} />
+            <OrbitControls ref={controlRef} domElement={canvasRef.current} enablePan={false}  enableZoom={false}/>
             <mesh>
               <Sphere args={[2, 32, 32]} >
 
