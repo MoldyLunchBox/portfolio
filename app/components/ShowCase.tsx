@@ -145,6 +145,11 @@ export const ShowCase = ({ canvasRef, camRotate }: Props) => {
       name: "gomoku",
       screenshot: useTexture('./img/npuzzle.jpg'),
       light: useMemo(() => new THREE.SpotLight('#fff'), [])
+    },
+    {
+      name: "Landing Page",
+      screenshot: useTexture('./img/landingPageFlat.jpg'),
+      light: useMemo(() => new THREE.SpotLight('#fff'), [])
     }
   ]
   const loader = new FBXLoader();

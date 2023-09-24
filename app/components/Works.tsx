@@ -13,6 +13,7 @@ export const Works = () => {
     { name: "Gomoku", link: "https://gomoku-reactjs.vercel.app/" },
     { name: 'PingPong', link: "https://ping-pong-matter-js.vercel.app/" },
     { name: 'N_puzzle', link: "https://n-puzzle-nm9kfedmc-moldylunchbox.vercel.app/" },
+    { name: 'Landing Page', link: "https://flat-earth-plum.vercel.app/" },
 
   ];
   const handleClick = (direction: string) => {
@@ -29,45 +30,6 @@ export const Works = () => {
     if (project)
       setHelp(false)
   }
-  // const handleClick = (direction: string) => {
-  //   if (worksRef.current) {
-  //     const { scrollLeft, clientWidth } = worksRef.current
-  //     const scrollTo = direction === "left"
-  //       ? scrollLeft - clientWidth/2
-  //       : scrollLeft + clientWidth/2
-  //       worksRef.current.scrollTo({ left: scrollTo, behavior: "smooth" })
-  //   }
-
-  // }
-  // const handleClick = (scrollDirection: string) => {
-  //   if (worksRef.current) {
-  //     const { scrollTop, clientHeight } = worksRef.current;
-  //     const scrollAmount = clientHeight / (Object.keys(projects).length / 4);
-  //     let scrollPosition = scrollTop;
-
-  //     const scrollAnimation = () => {
-  //       if (scrollDirection === 'up') {
-  //         scrollPosition -= 10; // Adjust the scroll speed here
-  //         if (scrollPosition > scrollTop - scrollAmount) {
-  //           worksRef.current.scrollTo({ top: scrollPosition });
-  //           requestAnimationFrame(scrollAnimation);
-  //         } else {
-  //           worksRef.current.scrollTo({ top: scrollTop - scrollAmount });
-  //         }
-  //       } else if (scrollDirection === 'down') {
-  //         scrollPosition += 10; // Adjust the scroll speed here
-  //         if (scrollPosition < scrollTop + scrollAmount) {
-  //           worksRef.current.scrollTo({ top: scrollPosition });
-  //           requestAnimationFrame(scrollAnimation);
-  //         } else {
-  //           worksRef.current.scrollTo({ top: scrollTop + scrollAmount });
-  //         }
-  //       }
-  //     };
-
-  //     scrollAnimation();
-  //   }
-  // };
 
 
   const [camRotate, setCamRotate] = useState(0)
